@@ -17,7 +17,7 @@ namespace Samshal\Acl\Resource;
 class DefaultResource implements ResourceInterface
 {
 	/**
-	 * @var string $ResourceName
+	 * @var string $resourceName
 	 * @access protected
 	 */
 	protected $resourceName;
