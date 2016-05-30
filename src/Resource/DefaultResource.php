@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_type=1);
+declare(strict_types=1);
 /**
  * @license MIT
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
@@ -17,18 +17,11 @@ namespace Samshal\Acl\Resource;
  */
 class DefaultResource implements ResourceInterface
 {
-<<<<<<< HEAD
 	/**
 	 * @var string $resourceName
 	 * @access protected
 	 */
 	protected $resourceName;
-=======
-    /**
-     * @var string
-     */
-    protected $resourceName;
->>>>>>> 4437b1bc887583bcbb5bfb61109a97ee7020d5fa
 
     /**
      * {@inheritdoc}
