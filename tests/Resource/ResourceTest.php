@@ -1,35 +1,36 @@
-<?php declare(strict_type=1);
+<?php
+
+declare(strict_type=1);
 /**
  * @license MIT
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @copyright Copyright (c) 2016 Samshal http://samshal.github.com
  */
-
 namespace Samshal\Acl\Test\Resource;
 
 use Samshal\Acl\Resource\DefaultResource as Resource;
 
 /**
- * class ResourceTest
+ * class ResourceTest.
  */
 class ResourceTest extends \PHPUnit_Framework_TestCase
 {
-	public function testNewResourceReturnStringName()
-	{
-		$newResource = new Resource("viewPatientHistory");
+    public function testNewResourceReturnStringName()
+    {
+        $newResource = new Resource('viewPatientHistory');
 
-		$expected = "viewPatientHistory";
-		$result = $newResource->getResourceName();
-		$this->assertEquals($expected, $result);
-	}
+        $expected = 'viewPatientHistory';
+        $result = $newResource->getResourceName();
+        $this->assertEquals($expected, $result);
+    }
 
-	public function testNewResourceReturnNameWhenCastedAsString()
-	{
-		$newResource = new Resource("viewPatientHistory");
+    public function testNewResourceReturnNameWhenCastedAsString()
+    {
+        $newResource = new Resource('viewPatientHistory');
 
-		$expected = "viewPatientHistory";
-		$result = (string)$newResource;
+        $expected = 'viewPatientHistory';
+        $result = (string) $newResource;
 
-		$this->assertEquals($expected, $result);
-	}
+        $this->assertEquals($expected, $result);
+    }
 }
