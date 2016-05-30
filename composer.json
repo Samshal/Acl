@@ -9,7 +9,9 @@
             "email": "samueladeshina73@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": "^5.3.3 || ^7.0"
+    },
     "autoload":{
         "psr-4":{
             "Samshal\\Acl\\":"./src"
