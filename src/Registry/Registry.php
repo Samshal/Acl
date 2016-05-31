@@ -13,7 +13,7 @@ namespace Samshal\Acl\Registry;
  *
  * @package samshal.acl.registry
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
- * @since 30/05/2016
+ * @since 31/05/2016
  */
 class Registry implements RegistryInterface
 {
