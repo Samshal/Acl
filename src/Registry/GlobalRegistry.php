@@ -1,5 +1,4 @@
-<?php
-declare (strict_types=1);
+<?php declare (strict_types=1);
 
 /**
  * This file is part of the Samshal\Acl library
@@ -20,7 +19,7 @@ class GlobalRegistry extends Registry
 {
     /**
      * Overrides the global save method
-     * 
+     *
      * @param string $role
      * @param variadic $options
      * @throws Exception
@@ -29,17 +28,24 @@ class GlobalRegistry extends Registry
     public function save($role, ...$options)
     {
         if (!isset($options[0])) {
-            throw new Exception("Resource parameter must be passed in as second argument to the save method");
+            throw new Exception(
+                "Resource parameter must be passed in as ".
+                "second argument to the save method"
+            );
         }
         if (!isset($options[1])) {
-            throw new Exception("Permission parameter must be passed in as third argument to the save method");
+            throw new Exception(
+                "Permission parameter must be passed in as ".
+                "third argument to the save method"
+            );
         }
+
         $resource = $options[0];
         $permission = $options[1];
         $status = (isset($options[2])) ? $options[2] : true;
 
         $this->registry[$role][$resource][$permission]["status"] = $status;
 
-        return;
+        return; # <- obsolete
     }
 }
