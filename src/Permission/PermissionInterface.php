@@ -1,31 +1,36 @@
-<?php declare(strict_types=1);
+<?php 
+declare (strict_types=1);
+
 /**
+ * This file is part of the Samshal\Acl library
+ *
  * @license MIT
- * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @copyright Copyright (c) 2016 Samshal http://samshal.github.com
  */
-
 namespace Samshal\Acl\Permission;
 
 /**
- * interface PermissionInterface.
+ * Interface PermissionInterface.
  *
- * Any class that creates a new Permission must obey this contract.
+ * Any class that creates a new Permission must sign this contract.
  *
+ * @package samshal.acl.permission
+ * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @since 30/05/2016
  */
 interface PermissionInterface
 {
-	/**
-	 * @param string permissionName
-	 */
-	public function __construct($permissionName);
+    /**
+     * Constructor
+     * @param string permissionName
+     */
+    public function __construct($permissionName);
 
-	/**
-	 * Returns the name of a Permission object
-	 *
-	 * @throws {@todo create exception for 'invalid permission object supplied'}
-	 * @return string
-	 */
-	public function getPermissionName();
+    /**
+     * Returns the name of a Permission object
+     *
+     * @throws {@todo create exception for 'invalid permission object supplied'}
+     * @return string
+     */
+    public function getPermissionName();
 }

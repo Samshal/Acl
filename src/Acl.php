@@ -1,9 +1,10 @@
 <?php
-
 declare(strict_types=1);
+
 /**
+ * This file is part of the Samshal\Acl library
+ *
  * @license MIT
- * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @copyright Copyright (c) 2016 Samshal http://samshal.github.com
  */
 namespace Samshal\Acl;
@@ -29,6 +30,10 @@ use Samshal\Acl\Registry\{
 
 
 /**
+ * Class Acl
+ *
+ * @package samshal.acl
+ * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @since 30/05/2016
  */
 class Acl implements AclInterface
@@ -54,16 +59,17 @@ class Acl implements AclInterface
 	public $globalRegistry;
 
 	/**
-	 *  @var array $sesion
+	 *  @var string[] $sesion
 	 */
 	protected $session = [];
 
 	/**
-	 * @var SYN_ALLOW
+	 * @var string SYN_ALLOW
 	 */
 	const SYN_ALLOW = "can";
+
 	/**
-	 * @var SYN_ALLOW
+	 * @var string SYN_DENY
 	 */
 	const SYN_DENY = "cannot";
 
@@ -78,6 +84,8 @@ class Acl implements AclInterface
 
 	/**
 	 * Initalizes the registries
+	 *
+	 * @return void
 	 */
 	protected function initRegistries()
 	{
@@ -85,19 +93,29 @@ class Acl implements AclInterface
 		$this->resourceRegistry = new ResourceRegistry();
 		$this->permissionRegistry = new PermissionRegistry();
 		$this->globalRegistry = new GlobalRegistry();
+
+		return;
 	}
 
 	/**
-	 * Initializes the session
+	 * Initializes the global session array and sets them to the default value
+	 *
+	 * @return void 
 	 */
 	protected function initSession()
 	{
 		$this->session["query"] = true;
 		unset($this->session["role"], $this->session["status"]);
+
+		return;
 	}
 
 	/**
-	 * 
+	 * Listen for and intercept properties that're not set
+	 *
+	 * @param string|RoleInterface $role;
+	 * @throws \Exception
+	 * @return AclInterface 
 	 */
 	public function __get($role)
 	{
@@ -121,7 +139,12 @@ class Acl implements AclInterface
 	}
 
 	/**
-	 * 
+	 * Listen for and intercept undefined methods
+	 *
+	 * @param string|PermissionInterface $permission
+	 * @param string[]|ResourceInterface[] $args
+	 * @throws \Exception
+	 * @return void
 	 */
 	public function __call($permission, $args)
 	{
@@ -137,10 +160,12 @@ class Acl implements AclInterface
 
 		$this->allow($this->session["role"], $permission, $args[0], $this->session["status"]);
 		$this->initSession();
+
+		return;
 	}
 
 	/**
-	 * Adds a new role object to the registry
+	 * Add a new role object to the registry
 	 *
 	 * @param RoleInterface|string $role
 	 * @return void
@@ -153,10 +178,12 @@ class Acl implements AclInterface
 		}
 
 		$this->roleRegistry->save($role);
+
+		return;
 	}
 
 	/**
-	 * Adds a new resource object to the registry
+	 * Add a new resource object to the registry
 	 *
 	 * @param ResourceInterface|string $resource
 	 * @return void
@@ -169,10 +196,12 @@ class Acl implements AclInterface
 		}
 
 		$this->resourceRegistry->save($resource);
+
+		return;
 	}
 
 	/**
-	 * Adds a new permission object to the registry
+	 * Add a new permission object to the registry
 	 *
 	 * @param PermissionInterface|string $permission
 	 * @return void
@@ -185,10 +214,19 @@ class Acl implements AclInterface
 		}
 
 		$this->permissionRegistry->save($permission);
+
+		return;
 	}
 
 	/**
-	 * 
+	 * Adds objects lazily. 
+	 *
+	 * Automatically determine the type of an object and call the appropriate
+	 * add method on it.
+	 *
+	 * @param RoleInterface|ResourceInterface|PermissionInterface $object
+	 * @throws \Exception
+	 * @return void
 	 */
 	public function add($object)
 	{
@@ -204,10 +242,20 @@ class Acl implements AclInterface
 		{
 			$this->addPermission($object);
 		}
+		else throw new \Exception(sprintf("%s must implement one of RoleInterface, ResourceInterface and PermissionInterface", $object));
+
+		return;
 	}
 
 	/**
-	 * 
+	 * Change the status option of an assigned permission to true
+	 *
+	 * @param RoleInterface|string $role;
+	 * @param PermissionInterface|string $permission
+	 * @param ResourceInterface|string $resource
+	 * @param boolean $status Optional
+	 * @throws \Exception
+	 * @return void
 	 */
 	public function allow($role, $permission, $resource, $status=true)
 	{
@@ -216,18 +264,32 @@ class Acl implements AclInterface
 		if (!$this->resourceRegistry->exists($resource)) throw new \Exception(sprintf("The resource: %s doesnt exist", (string)$resource));
 
 		$this->globalRegistry->save($role, $resource, $permission, $status);
+
+		return;
 	}
 
 	/**
-	 * 
+	 * Change the status option of an assigned permission to false
+	 *
+	 * @param RoleInterface|string $role;
+	 * @param PermissionInterface|string $permission
+	 * @param ResourceInterface|string $resource
+	 * @return void
 	 */
 	public function deny($role, $permission, $resource)
 	{
 		$this->allow($role, $permission, $resource, false);
+
+		return;
 	}
 
 	/**
-	 * 
+	 * Retrieve the status of a permission assigned to a role
+	 *
+	 * @param RoleInterface|string $role;
+	 * @param PermissionInterface|string $permission
+	 * @param ResourceInterface|string $resource
+	 * @return boolean
 	 */
 	public function getPermissionStatus($role, $permission, $resource)
 	{

@@ -1,9 +1,10 @@
 <?php
+declare (strict_types=1);
 
-declare(strict_types=1);
 /**
+ * This file is part of the Samshal\Acl library
+ *
  * @license MIT
- * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @copyright Copyright (c) 2016 Samshal http://samshal.github.com
  */
 namespace Samshal\Acl\Resource;
@@ -13,12 +14,16 @@ namespace Samshal\Acl\Resource;
  *
  * Any class that creates a new Resource must obey this contract.
  *
+ * @package samshal.acl.resource
+ * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @since 30/05/2016
  */
 interface ResourceInterface
 {
     /**
-     * @param string resourceName
+     * Constructor
+     *
+     * @param string $resourceName
      */
     public function __construct($resourceName);
 
