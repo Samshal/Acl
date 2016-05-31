@@ -17,11 +17,10 @@ namespace Samshal\Acl\Resource;
  */
 class DefaultResource implements ResourceInterface
 {
-	/**
-	 * @var string $resourceName
-	 * @access protected
-	 */
-	protected $resourceName;
+    /**
+     * @var string
+     */
+    protected $resourceName;
 
     /**
      * {@inheritdoc}
