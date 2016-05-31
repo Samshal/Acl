@@ -230,15 +230,15 @@ class Acl implements AclInterface
 	 */
 	public function add($object)
 	{
-		if (in_array(__NAMESPACE__."\\Role\\RoleInterface", class_implements($object)))
+		if ($object instanceof RoleInterface)
 		{
 			$this->addRole($object);
 		}
-		else if (in_array(__NAMESPACE__."\\Resource\\ResourceInterface", class_implements($object)))
+		else if ($object instanceof ResourceInterface)
 		{
 			$this->addResource($object);
 		}
-		else if (in_array(__NAMESPACE__."\\Permission\\PermissionInterface", class_implements($object)))
+		else if ($object instanceof PermissionInterface)
 		{
 			$this->addPermission($object);
 		}
