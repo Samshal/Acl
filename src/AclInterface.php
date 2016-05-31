@@ -1,5 +1,4 @@
-<?php
-declare (strict_types=1);
+<?php declare (strict_types=1);
 
 /**
  * This file is part of the Samshal\Acl library
@@ -45,7 +44,7 @@ interface AclInterface
     public function addPermission($permission);
 
     /**
-     * Adds objects lazily. 
+     * Adds objects lazily.
      *
      * Automatically determine the type of an object and call the appropriate
      * add method on it.

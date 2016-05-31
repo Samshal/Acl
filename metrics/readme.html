@@ -1,0 +1,1647 @@
+<html>
+<head>
+    <title>PhpMetrics report v1.10.0 - by Jean-François Lépine</title>
+    <meta charset="utf-8">
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFA+LP9QPiz/UD4s/1A+LP9QPiz/UD4s/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUD4s/1A+LP9QPiz/UD4s/1A+LP9QPiz/UD4s/1A+LP9QPiz/UD4s/wAAAAAAAAAAAAAAAAAAAAAAAAAAUD4s/1A+LP9QPiz/UD4s/1A+LP9QPiz/UD4s/wC6eP8sdU7/ALp4/1A+LP9QPiz/AAAAAAAAAAAAAAAAUD4s/1A+LP9QPiz/UD4s/1A+LP9QPiz/UD4s/wC6eP9QPiz/SUgy/wC6eP9LRTD/ALp4/1A+LP8AAAAAAAAAAFA+LP9QPiz/UD4s/1A+LP9QPiz/UD4s/wC6eP89Wz3/ALp4/wCz9P8As/T/UD4s/wC6eP9QPiz/AAAAAFA+LP9QPiz/UD4s/1A+LP9QPiz/TkAt/1A+LP8Aunj/OGJC/wCz9P8As/T/ALP0/xSbZf9QPiz/UD4s/1A+LP9QPiz/UD4s/1A+LP9QPiz/ALp4/1A+LP8Aunj/ALp4/wui2P9QPiz/Cabd/wevcf8Aunj/UD4s/1A+LP9QPiz/UD4s/1A+LP9QPiz/TUMv/wC6eP8Aunj/ALp4/wC6eP8Aunj/ALp4/wynbP9QPiz/K3dP/zZmRP9QPiz/UD4s/1A+LP9QPiz/ALp4/wC6eP8Aunj/TEQw/xqSX/8As/T/SEoz/wC6eP8BuHf/ALP0/wC6eP8Aunj/C6ht/1A+LP9QPiz/OWFC/wC6eP8Aunj/ALp4/01BLv8qdYv/UD4s/wCz9P9QPiz/ALp4/1A+LP8Aunj/ALp4/wC6eP9QPiz/UD4s/1A+LP8As/T/ALP0/1A+LP8As/T/ALP0/wC6eP8Aunj/UD4s/wC6eP8za0f/UD4s/xeVYv8Kqm7/UD4s/wAAAABQPiz/ALP0/wCz9P8Aunj/ALP0/zdhaf9QPiz/UD4s/wC6eP9QPiz/ALp4/wC6eP8Aunj/UD4s/wAAAAAAAAAAUD4s5FA+LP9QPiz/UD4s/wCz9P8As/T/UD4s/wC6eP8Snmf/UD4s/1A+LP9QPiz/UD4s/1A+LP8AAAAAAAAAAAAAAABQPiz/UD4s/1A+LP8As/T/ALP0/1A+LP8Aunj/UD4s/1A+LP9QPiz/UD4s/1A+LP8AAAAAAAAAAAAAAAAAAAAAAAAAADwvIZJQPiz/UD4s/1A+LP9QPiz/UD4s/1A+LP9QPiz/UD4s/1A+LNMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEY2J1ZQPiz/UD4s/1A+LP9QPiz/RjYnpQAAAAAAAAAAAAAAAAAAAAAAAAAA+B8AAOAHAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAAgAEAAMADAADgBwAA/B8AAA==" rel="icon" type="image/x-icon" />    <style type="text/css">
+                        /* ---- layout ---- */
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    text-align: center;
+    margin-bottom: 2.5em;
+}
+.container {
+    width: 1170px;
+    text-align: left;
+    margin: 0 auto;
+}
+.row {
+    position: relative;
+    clear: left;
+}
+.col-3 {
+    float:left;
+    width:28%;
+    margin-right:2%;
+}
+.col-3:last-child {
+    margin-right: 0;
+}
+.col-3:last-child:after {
+    content:" ";
+    clear:left;
+}
+
+.col-6 {
+    float:left;
+    width:48%;
+    margin-right:2%;
+}
+.col-3:last-child {
+    margin-right: 0;
+}
+.col-3:last-child:after {
+    content:" ";
+    clear:left;
+}
+
+.accessibility-box {
+    float:right;
+    width: 200px;
+}
+
+.menu, .menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.menu li {
+    display: inline-block;
+    padding: 10px 15px;
+}
+.menu li.active {
+    background-color: #428bca;
+    border-radius: 4px;
+}
+.menu li.active a {
+    color: #fff;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left:0;
+    text-align: center;
+    font-size: 0.9em;
+    background: #FFF;
+    height: 2.5em;
+    width: 100%;
+}
+.footer .container {
+    text-align: center;
+}
+
+
+/* ---- tabs ---- */
+.tab-pane {
+    display:none;
+}
+.tab-pane.active {
+    display:block;
+}
+
+
+/* ----- fonts ----- */
+a:hover, a:focus {
+    color: #2a6496;
+    text-decoration: underline;
+}
+a:active, a:hover {
+    outline: 0;
+}
+a {
+    color: #428bca;
+    text-decoration: none;
+    cursor: pointer;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+h4 {
+    font-weight: bold;
+}
+.more {
+    color: #666;
+    font-size: 0.9em;
+}
+
+
+/* ---- general styles ----- */
+.validate-critical, .critical {
+    background-color:#B01E00 !important;
+    color:#FFF;
+}
+.validate-warning, .warning {
+    background-color:#f4b300 !important;
+    color:#333;
+}
+.validate-good, .good {
+    background-color:#78ba00 !important;
+    color:#FFF;
+}
+.validate-unknown, .unknown {
+}
+
+/* ---- tables ---- */
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-size:0.8em;
+}
+.table-bordered {
+    border: 1px solid #ddd;
+}
+.table thead {
+    font-weight:normal;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+    background-color: #f9f9f9;
+}
+.mytable td {
+    width:4%;
+    text-align:center;
+}
+.mytable .sep {
+    border-left:1px solid #CCC;
+}
+
+.well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}
+
+
+/* ---- form ---- */
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+/* ---- Charts ---- */
+#chart-tableview .critical,
+#chart-tableview .warning,
+#chart-tableview .good,
+#chart-tableview .unknown {
+    display:block;
+    text-align: center;
+}
+
+#svg-custom,
+#svg-maintainability,
+#svg-abstractness {
+    width:300px;
+    height:300px;
+}
+.svg-main {
+    margin: 0 auto;
+    width:960px;;
+    height:960px;;
+}
+
+
+/* ---- maintainability ---- */
+#svg-maintainability svg circle:hover {
+    fill:steelblue !important;
+}
+
+/* ---- relations ---- */
+.node {
+    font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    fill: #bbb;
+}
+.node:hover {
+    fill: #000;
+}
+.link {
+    stroke: steelblue;
+    stroke-opacity: .4;
+    fill: none;
+    pointer-events: none;
+}
+.node:hover,
+.node--source,
+.node--target {
+    font-weight: 700;
+}
+.node--source {
+    fill: #AE113D;
+}
+.node--target {
+    fill: #4617B4;
+}
+.link--source,
+.link--target {
+    stroke-opacity: 1;
+    stroke-width: 2px;
+}
+.link--source {
+    stroke: #AE113D;
+}
+.link--target {
+    stroke: #4617B4;
+}
+.relation-source {
+    background-color: #AE113D;
+}
+.relation-target {
+    background-color: #4617B4;
+}
+
+
+/* ---- tooltip ---- */
+.tooltip {
+    position: absolute;
+    background: #333;
+    border-radius: 5px;
+    padding: 5px 15px;
+    box-shadow: 1px 1px 3px;
+    text-align: left;
+    color:#FFF;
+    z-index: 4;
+}
+
+/* ---- zoom ---- */
+.zoomed {
+    position: fixed;
+    z-index: 2;
+    top: 20px;
+    left: 0;
+    width: 100% !important;
+    height: 95% !important;
+    background: #FFF;
+}
+.btn-close {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    background: #333;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 3px 0;
+    height: 20px;
+    lien-height: 20px;
+}
+.btn-close a {
+    color: #FFF;
+}
+    </style>
+                <link rel="stylesheet" type="text/css" href="http://nvd3.org/assets/css/nv.d3.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/alangrafu/radar-chart-d3/master/src/radar-chart.min.css">
+    </head>
+
+<body>
+
+<div class="container">
+
+
+
+    <h1 id="title">PhpMetrics report</h1>
+
+    <div class="row">
+        <div class="well accessibility-box">
+            <label>
+                <input type="checkbox" onclick="toggleAccessibility()"> I'm colorblind
+            </label>
+        </div>
+
+        <div class="menu-box">
+            <ul id="menu" class="menu" >
+                <li id="link-overview" class="active"><a >Overview</a></li>
+                <li id="link-score"><a >Evaluation</a></li>
+                <li id="link-relations"><a  >Relations map</a></li>
+                <li id="link-repartition"><a  >Repartition</a></li>
+                <li id="link-explore"><a >Explore</a></li>
+                
+                <li id="link-help"><a  >Help</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+
+
+    <div class="tab-content row">
+
+
+        <!-- General details -->
+        <div class="row tab active" id="overview">
+            <div class="col-3">
+                <h3>Evaluation</h3>
+                <small><a id="btn-save-maintainability" download="phpmetric-maintainability.svg">Download (as SVG)</a> | <a onclick="return zoom('svg-maintainability', updateMaintainabilityChart);">zoom</a></small>
+                <div id="svg-maintainability"><svg /></div>
+
+                <div class="well ">
+
+                    <h4>Information</h4>
+                    <p>
+                        Each file is symbolized by a circle.
+                        Size of the circle represents the Cyclomatic complexity.
+                        Color of the circle represents the Maintainability Index.
+                    </p>
+                    <p>Large red circles will be probably hard to maintain.</p>
+                </div>
+
+            </div>
+            <div class=" col-3">
+
+                <h3 id="title-custom">Custom chart</h3>
+                <small><a id="btn-save-custom" download="phpmetric-custom.svg">Download (as SVG)</a> | <a onclick="return zoom('svg-custom', updateCustomChart);">zoom</a></small>
+                <div id="svg-custom"><svg /></div>
+
+                <div class="well">
+                    <h4>Configuration</h4>
+                    <p>
+                        Select metrics you want to display in chart.
+                    </p>
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <td>X Axis</td>
+                            <td>Y Axis</td>
+                            <td>Diameter</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select id="xAxis" class="form-control" onchange="xAxis = this.value; updateCustomChart();">
+                                                                            <option value="afferentCoupling">Afferent Coupling </option>
+                                                                            <option value="bugs">Bugs </option>
+                                                                            <option value="commentWeight">Comment Weight </option>
+                                                                            <option value="cyclomaticComplexity">Cyclomatic Complexity </option>
+                                                                            <option value="dc">Dc </option>
+                                                                            <option value="difficulty">Difficulty </option>
+                                                                            <option value="efferentCoupling">Efferent Coupling </option>
+                                                                            <option value="effort">Effort </option>
+                                                                            <option value="filename">Filename </option>
+                                                                            <option value="instability">Instability </option>
+                                                                            <option value="intelligentContent">Intelligent Content </option>
+                                                                            <option value="lcom">Lcom </option>
+                                                                            <option value="length">Length </option>
+                                                                            <option value="loc">Loc </option>
+                                                                            <option value="logicalLoc">Logical Loc </option>
+                                                                            <option value="maintainabilityIndex">Maintainability Index </option>
+                                                                            <option value="maintainabilityIndexWithoutComment">Maintainability Index Without Comment </option>
+                                                                            <option value="myerDistance">Myer Distance </option>
+                                                                            <option value="myerInterval">Myer Interval </option>
+                                                                            <option value="name">Name </option>
+                                                                            <option value="noc">Noc </option>
+                                                                            <option value="noc-anon">Noc-anon </option>
+                                                                            <option value="noca">Noca </option>
+                                                                            <option value="nocc">Nocc </option>
+                                                                            <option value="noi">Noi </option>
+                                                                            <option value="nom">Nom </option>
+                                                                            <option value="operators">Operators </option>
+                                                                            <option value="rdc">Rdc </option>
+                                                                            <option value="rsc">Rsc </option>
+                                                                            <option value="rsysc">Rsysc </option>
+                                                                            <option value="sc">Sc </option>
+                                                                            <option value="sysc">Sysc </option>
+                                                                            <option value="time">Time </option>
+                                                                            <option value="vocabulary">Vocabulary </option>
+                                                                            <option value="volume">Volume </option>
+                                                                    </select>
+                            </td>
+                            <td>
+                                <select id="yAxis" class="form-control" onchange="yAxis = this.value; updateCustomChart();">
+                                                                            <option value="afferentCoupling">Afferent Coupling </option>
+                                                                            <option value="bugs">Bugs </option>
+                                                                            <option value="commentWeight">Comment Weight </option>
+                                                                            <option value="cyclomaticComplexity">Cyclomatic Complexity </option>
+                                                                            <option value="dc">Dc </option>
+                                                                            <option value="difficulty">Difficulty </option>
+                                                                            <option value="efferentCoupling">Efferent Coupling </option>
+                                                                            <option value="effort">Effort </option>
+                                                                            <option value="filename">Filename </option>
+                                                                            <option value="instability">Instability </option>
+                                                                            <option value="intelligentContent">Intelligent Content </option>
+                                                                            <option value="lcom">Lcom </option>
+                                                                            <option value="length">Length </option>
+                                                                            <option value="loc">Loc </option>
+                                                                            <option value="logicalLoc">Logical Loc </option>
+                                                                            <option value="maintainabilityIndex">Maintainability Index </option>
+                                                                            <option value="maintainabilityIndexWithoutComment">Maintainability Index Without Comment </option>
+                                                                            <option value="myerDistance">Myer Distance </option>
+                                                                            <option value="myerInterval">Myer Interval </option>
+                                                                            <option value="name">Name </option>
+                                                                            <option value="noc">Noc </option>
+                                                                            <option value="noc-anon">Noc-anon </option>
+                                                                            <option value="noca">Noca </option>
+                                                                            <option value="nocc">Nocc </option>
+                                                                            <option value="noi">Noi </option>
+                                                                            <option value="nom">Nom </option>
+                                                                            <option value="operators">Operators </option>
+                                                                            <option value="rdc">Rdc </option>
+                                                                            <option value="rsc">Rsc </option>
+                                                                            <option value="rsysc">Rsysc </option>
+                                                                            <option value="sc">Sc </option>
+                                                                            <option value="sysc">Sysc </option>
+                                                                            <option value="time">Time </option>
+                                                                            <option value="vocabulary">Vocabulary </option>
+                                                                            <option value="volume">Volume </option>
+                                                                    </select>
+                            </td>
+                            <td>
+                                <select id="rAxis" class="form-control" onchange="rAxis = this.value; updateCustomChart();">
+                                                                            <option value="afferentCoupling">Afferent Coupling </option>
+                                                                            <option value="bugs">Bugs </option>
+                                                                            <option value="commentWeight">Comment Weight </option>
+                                                                            <option value="cyclomaticComplexity">Cyclomatic Complexity </option>
+                                                                            <option value="dc">Dc </option>
+                                                                            <option value="difficulty">Difficulty </option>
+                                                                            <option value="efferentCoupling">Efferent Coupling </option>
+                                                                            <option value="effort">Effort </option>
+                                                                            <option value="filename">Filename </option>
+                                                                            <option value="instability">Instability </option>
+                                                                            <option value="intelligentContent">Intelligent Content </option>
+                                                                            <option value="lcom">Lcom </option>
+                                                                            <option value="length">Length </option>
+                                                                            <option value="loc">Loc </option>
+                                                                            <option value="logicalLoc">Logical Loc </option>
+                                                                            <option value="maintainabilityIndex">Maintainability Index </option>
+                                                                            <option value="maintainabilityIndexWithoutComment">Maintainability Index Without Comment </option>
+                                                                            <option value="myerDistance">Myer Distance </option>
+                                                                            <option value="myerInterval">Myer Interval </option>
+                                                                            <option value="name">Name </option>
+                                                                            <option value="noc">Noc </option>
+                                                                            <option value="noc-anon">Noc-anon </option>
+                                                                            <option value="noca">Noca </option>
+                                                                            <option value="nocc">Nocc </option>
+                                                                            <option value="noi">Noi </option>
+                                                                            <option value="nom">Nom </option>
+                                                                            <option value="operators">Operators </option>
+                                                                            <option value="rdc">Rdc </option>
+                                                                            <option value="rsc">Rsc </option>
+                                                                            <option value="rsysc">Rsysc </option>
+                                                                            <option value="sc">Sc </option>
+                                                                            <option value="sysc">Sysc </option>
+                                                                            <option value="time">Time </option>
+                                                                            <option value="vocabulary">Vocabulary </option>
+                                                                            <option value="volume">Volume </option>
+                                                                    </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-3">
+                <h3>Abstractness / Instability</h3>
+                <small><a id="btn-save-abstractness" download="phpmetric-abstractness.svg">Download (as SVG)</a> | <a onclick="return zoom('svg-abstractness', updateAbstractnessChart);">zoom</a></small>
+                <div id="svg-abstractness"><svg /></div>
+            </div>
+        </div>
+        <!-- end: General details -->
+
+        <!-- Score -->
+        <div class="tab" id="score">
+            <div class="col-sm-12">
+                <h3>Score</h3>
+
+                <div class="col-6">
+                    <div id="chart-score"></div>
+                </div>
+
+                <div class="col-6">
+                    <p>
+                        This score is not absolute. This chart is a comparison of your project relative to a representative average of recent PHP projects.
+                    </p>
+                    <p>
+                        Each score is calculated from <acronym title="Cyclomatic complexity, Halstead metrics, Maintainability Index, Comment weight, Difficulty, Logical lines of code...">various criterias</acronym> from 14 files in your projects.
+                        Your score is a note between 0 (poor) and 100 (excellent).
+                    </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Factor</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                    <tr>
+                                <td>Maintainability</td>
+                                <td>100 / 100</td>
+                            </tr>
+                                                    <tr>
+                                <td>Accessibility for new developers</td>
+                                <td>100 / 100</td>
+                            </tr>
+                                                    <tr>
+                                <td>Simplicity of algorithms</td>
+                                <td>69.43 / 100</td>
+                            </tr>
+                                                    <tr>
+                                <td>Volume</td>
+                                <td>97.85 / 100</td>
+                            </tr>
+                                                    <tr>
+                                <td>Reducing bug&#039;s probability</td>
+                                <td>95.08 / 100</td>
+                            </tr>
+                                                </tbody>
+                    </table>
+                    <p>
+                        <strong>This score does not replace the judgement of a human.</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- end: Score -->
+
+        <!-- Relations -->
+        <div class="tab" id="relations">
+            <h3>Relations</h3>
+            <div class="col-sm-12">
+                <div class="well">
+                    <p>
+                        Class uses another when it calls, constructs, types hint, extends or implements it.
+                    </p>
+                    <ul>
+                        <li><span class="badge relation-source">Used by</span> : this class is used by hovered element.</li>
+                        <li><span class="badge relation-target">Uses</span> : this class uses hovered element.</li>
+                    </ul>
+
+                </div>
+                <small><a id="btn-save-relations" download="phpmetric-relations.svg">Download (as SVG)</a></small>
+                <div class="svg-main" id="svg-relations"><svg /></div>
+
+            </div>
+        </div>
+        <!-- end: Relations -->
+
+
+        <!-- Tabular datas -->
+        <div class="tab" id="explore">
+            <div class="col-sm-12">
+                <h3>Explore</h3>
+                <p>
+                    <select id="select-display-tabular">
+                        <option value="all" selected="selected">Display metrics</option>
+                        <option value="essential">Essential</option>
+                        <option value="all">All</option>
+                    </select>
+                </p>
+                <div id="chart-tableview"></div>
+            </div>
+        </div>
+        <!-- end: Tabular datas -->
+
+
+        <!-- Volume -->
+        <div class="tab" id="repartition">
+            <h3>Repartition</h3>
+            <div class="col-3">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Files</td>
+                            <td>14</td>
+                        </tr>
+                        <tr>
+                            <td>Lines of code</td>
+                            <td>
+                                969
+                                                                    <span class="more">(69 by class,
+                                        23 by method)</span>
+                                                            </td>
+                        </tr>
+                        <tr>
+                            <td>Logical lines of code</td>
+                            <td>
+                                131
+                                                                    <span class="more">(9 by class,
+                                        3 by method)</span>
+                                                            </td>
+                        </tr>
+                        <tr>
+                            <td>Classes</td>
+                            <td>14
+                                                                    <div>
+                                        <span class="more">
+                                            5 interfaces (36 %)
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="more">
+                                            8 concrete classes (57 %)
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="more">
+                                            6 abstract classes (43 %)
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="more">
+                                            0 anonymous classes (0 %)
+                                        </span>
+                                    </div>
+                                                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Methods</td>
+                            <td>
+                                42
+                                                                    <span class="more">(3 by class )</span>
+                                                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td>Relative system complexity</td>
+                        <td>1.04</td>
+                    </tr>
+                    <tr>
+                        <td>Relative data complexity</td>
+                        <td>0.82</td>
+                    </tr>
+                    <tr>
+                        <td>Relative structure complexity</td>
+                        <td>0.22</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td>Lack of cohesion of methods</td>
+                        <td>0.5</td>
+                    </tr>
+                    <tr>
+                        <td>Efferent Coupling</td>
+                        <td>0.5</td>
+                    </tr>
+                    <tr>
+                        <td>Afferent Coupling</td>
+                        <td>0.07</td>
+                    </tr>
+                    <tr>
+                        <td>Abstractness</td>
+                        <td>0.43</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end: Volume -->
+
+        <!-- Help -->
+        <div class="tab" id="help">
+            <div class="col-sm-12">
+                <h3>Help</h3>
+                <ul>
+                    <li>You're using PhpMetrics v1.10.0</li>
+                    <li>Online help is available on the <a href="http://www.phpmetrics.org/documentation/index.html">PhpMetrics website</a>.</li>
+                    <li>Sources of PhpMetrics are available on <a href="https://github.com/PhpMetrics/PhpMetrics">Github</a>.</li>
+                    <li>PhpMetrics is created by <a href="http://lepine.pro">Jean-François Lépine</a>.</li>
+                </ul>
+            </div>
+        </div>
+        <!-- end: Help -->
+
+        <!-- Extensions blocks -->
+        
+        <!-- end: Extensions -->
+
+    </div>
+
+
+    <div class="row footer">
+        <div class="container">
+            Powered by <a href="http://www.phpmetrics.org">PhpMetrics</a> v1.10.0 - Copyright Jean-François Lépine
+            <br/> Generated on 31st of May 2016 at 03:45:57 PM
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+    function validate() {
+        return 'unknown';
+    }
+
+
+    function validate(key, value) {
+        var rule = ruleSet[key];
+
+        if(typeof(rule) === 'undefined' || rule === undefined) {
+            return 'unknown';
+        }
+
+        // according order
+        if(rule[0] < rule[2]) {
+            // critical < warn < good
+            switch(true) {
+                case value < rule[1]:
+                    return 'critical';
+                case value >= rule[1] && value < rule[2]:
+                    return 'warning';
+                default:
+                    return 'good';
+            }
+        } else {
+            // critical > warn > good
+            switch(true) {
+                case value > rule[1]:
+                    return 'critical';
+                case value < rule[2]:
+                    return 'good';
+                default:
+                    return 'warning';
+            }
+        }
+    }
+
+    function validateIn(results, key, type) {
+        type = type || 'average';
+        var value = results[type] ? results[type][key] : results[key];
+        return validate(key, value);
+    }
+
+
+    function textify(string) {
+        string = string.charAt(0).toUpperCase() + string.slice(1);
+        return string.replace(/([a-z0-9])([A-Z])/, "$1 $2");
+    }
+
+    function toggleAccessibility() {
+        accessibilityEnabled = !!!accessibilityEnabled;
+        document.getElementById('svg-maintainability').firstElementChild.innerHTML = '';
+        updateMaintainabilityChart();
+
+    }
+
+
+    function displayTab(e, id) {
+
+        var i, tabs = document.getElementsByClassName('tab');
+        for(i = 0; i < tabs.length; i++) {
+            tabs[i].style.display = 'none';
+        }
+        document.getElementById(id).style.display = 'block';
+
+        var child, menu = document.getElementById('menu');
+        var nodes = menu.childNodes;
+        for(var i = 0; i < nodes.length; i++) {
+            nodes[i].className = '';
+        }
+
+        e.className = 'active';
+    }
+
+    function zoom(id, callback) {
+        var e = document.getElementById(id);
+
+        // preserve olds values
+        e.setAttribute('data-original-width', e.offsetWidth);
+        e.setAttribute('data-original-height', e.offsetHeight);
+
+        // zoom
+        e.className = 'zoomed';
+
+        // add close button
+        var close = document.createElement('div');
+        close.setAttribute('id', 'btn-close');
+        close.innerHTML = '<a>Close</a>';
+        document.body.appendChild(close);
+        close.className = 'btn-close'
+        close.onclick = function(id, callback) {
+            return function() {
+                zoomOut(id, callback);
+            }
+        }(id, callback);
+
+        // apply callback
+        callback();
+    }
+
+    function zoomOut(id, callback) {
+        var e = document.getElementById(id);
+
+        // zoom
+        e.className = '';
+
+        // remove close button
+        var close = document.getElementById('btn-close');
+        close.parentNode.removeChild(close);
+
+        // apply callback
+        var w = e.getAttribute('data-original-width');
+        callback(w);
+    }
+
+</script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="http://nvd3.org/assets/js/nv.d3.js" charset="utf-8"></script>
+    <script src="https://cdn.rawgit.com/alangrafu/radar-chart-d3/master/src/radar-chart.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+    function updateScoreChart() {
+        if(updateScoreChart.initiazed) return;
+        updateScoreChart.initiazed = true;
+        var score = [
+            {
+                className: 'score',
+                axes: [
+                                            {axis: "Maintainability", value: 100 },
+                                            {axis: "Accessibility for new developers", value: 100 },
+                                            {axis: "Simplicity of algorithms", value: 69 },
+                                            {axis: "Volume", value: 98 },
+                                            {axis: "Reducing bug's probability", value: 95 },
+                                    ]
+            }
+        ];
+
+        var chart = RadarChart.chart();
+        chart.config({
+            maxValue: 100,
+            w: 500,
+            h: 500
+        });
+        var svg = d3.select('#chart-score').append('svg');
+
+        // darw one
+        svg.append('g').classed('focus', 1).datum(score).call(chart);
+        svg.attr('width', 500).attr('height', 500);
+    }
+</script>
+<script type="text/javascript">
+
+    var tabularCurrentView = 'all';
+
+    function updateTableView() {
+
+        document.getElementById('chart-tableview').innerHTML = '';
+
+        /**
+         * Get column header
+         *
+         * @param label
+         * @param key
+         * @param type [average|sum|min|max]
+         * @returns object
+         */
+        function getCol(label, key, type, help, doValidate) {
+            type = type || false;
+            if(doValidate == undefined) {
+                doValidate = true;
+            }
+            return {
+                format: function(d) {
+                    if(type) {
+                        return d[type] ? d[type][key] : d[key];
+                    }
+                    return d[key];
+                },
+                label: '<abbr title="' + help + '">' + label + '</abbr>',
+                type: type,
+                classes:
+                        ( doValidate
+                            ? function(d) { return validateIn(d,key, type); }
+                            : ''
+                        )
+            };
+        }
+
+        /**
+         * Get all columns
+         *
+         * @returns {*[]}
+         */
+        function getAllColumns() {
+            return [
+                getCol('loc'            , 'loc'                     , 'sum'     , 'Number of lines of code'                 , false),
+                getCol('lloc'           , 'logicalLoc'              , 'sum'     , 'Number of logical lines of code'         ,false),
+                getCol('CommW'          , 'commentWeight'           , 'average' , 'Comment Weight'),
+                getCol('Length'         , 'length'                  , 'sum'     , 'Halstead length'),
+                getCol('Volume'         , 'volume'                  , 'average' , 'Halstead Volume'),
+                getCol('Vocabulary'     , 'vocabulary'              , 'average' , 'Halstead Vocabulary'),
+                getCol('Eff.'           , 'effort'                  , 'average' , 'Halstead effort'),
+                getCol('MI'             , 'maintainabilityIndex'     , 'average' , 'Maintainability Index (mi < 65: low ; 65 < mi < 85: correct; 85 < mi: good)'),
+                getCol('MIwC'           , 'maintainabilityIndexWithoutComment' , 'average', 'Maintainability index without comments'),
+                getCol('Diff'           , 'difficulty'              , 'average' , 'Halstead difficulty (average)'),
+                getCol('Bugs'           , 'bugs'                    , 'average' , 'Estimated number of bugs (average by file)'),
+                getCol('IC'             , 'intelligentContent'      , 'average' , 'Intelligent content'),
+                getCol('CC'             , 'cyclomaticComplexity'    , 'average' , "Cyclomatic complexity"),
+                getCol('Dist.'          , 'myerDistance'            , 'average' , "Myer's distance"),
+                getCol('Oper.'          , 'operators'               , 'sum'     , 'Number of operators'                 , false),
+                getCol('lcom'           , 'lcom'                    , 'average' , 'Lack of cohesion of methods (LCOM4)'),
+                getCol('rsysc'          , 'rsysc'                   , 'average' , 'Relative System complexity'),
+                getCol('rdc'            , 'rdc'                     , 'average' , 'Relative Data complexity'),
+                getCol('rsc'            , 'rsc'                     , 'average' , 'Relative Structural complexity'),
+                getCol('Abstr.'         , 'abstractness'            , false     , 'Abstractness'),
+                getCol('Inst.'          , 'instability'             , false     , 'Instability'),
+                getCol('EC'             , 'efferentCoupling'        , 'average' , 'Efferent coupling'),
+                getCol('AC'             , 'afferentCoupling'        , 'average' , 'Afferent coupling'),
+                getCol('noc'            , 'noc'                     , 'sum'     , 'Number of classes'                   , false),
+                getCol('noca'           , 'noca'                    , 'sum'     , 'Number of abstract classes and interfaces'          , false),
+                getCol('nocc'           , 'nocc'                    , 'sum'     , 'Number of concrete classes'          , false),
+                getCol('noi'            , 'noi'                     , 'sum'     , 'Number of interfaces'                , false)
+            ];
+        }
+
+        /**
+         * Get essentials columns
+         *
+         * @returns {*[]}
+         */
+        function getEssentialColumns() {
+            return [
+                getCol('Lines of code'            , 'loc'                     , 'sum'     , 'Number of lines of code'                 , false),
+                getCol('Logical lines of code'           , 'logicalLoc'              , 'sum'     , 'Number of logical lines of code'         ,false),
+                getCol('Comment weight'          , 'commentWeight'           , 'average' , 'Comment Weight'),
+                getCol('Maintainability index'             , 'maintainabilityIndex'     , 'average' , 'Maintainability Index (mi < 65: low ; 65 < mi < 85: correct; 85 < mi: good)'),
+                getCol('Bugs'           , 'bugs'                    , 'average' , 'Estimated number of bugs (average by file)'),
+                getCol('Lack of cohesion of methods'           , 'lcom'                    , 'average' , 'Lack of cohesion of methods (LCOM4)'),
+            ];
+        }
+
+        /**
+         * Get only active columns
+         *
+         * @returns {*[]}
+         */
+        function getActiveColumns() {
+            switch(tabularCurrentView) {
+                case 'essential':
+                    return getEssentialColumns();
+                case 'all':
+                default:
+                    return getAllColumns();
+            }
+        }
+
+        nv.addGraph(function() {
+            var columns = getActiveColumns();
+            columns.unshift({
+                key: 'name',
+                label: 'Name',
+                showCount: true,
+                type: 'text',
+                classes: function(d) {
+                    return  'name '
+                            + (d.childs ? 'clickable ' : '')
+                            + 'depth-' + d._depth;
+                }
+            });
+            var chart = nv.models.indentedTree()
+                    .tableClass('table table-striped') //for bootstrap styling
+                    .columns(columns);
+
+            d3.select('#chart-tableview')
+                    .datum(tabularize(JSON.parse(JSON.stringify(groupedData))))
+                    .call(chart);
+
+            // fix bug with nvd3js and html in labels
+            d3.select('#chart-tableview').selectAll('th').each(function() {
+                this.innerHTML = this.innerText;
+            });
+
+
+
+            return chart;
+        });
+
+        // select type of display
+        var d = document.getElementById('select-display-tabular');
+        d.onchange = function(){
+            tabularCurrentView = this.options[this.selectedIndex].value;
+            updateTableView();
+        }
+
+    }
+
+    function tabularize(root) {
+        var result = root;
+
+        var i, len = root.length;
+
+        for(i = 0; i < len; i++) {
+            result[i]._values = root[i].childs;
+            delete result[i].childs;
+            result[i]._depth = result[i].depth;
+        }
+
+        // we want to display results in a tree
+        var parents = [
+            { name: "temporary", _values: []}
+        ];
+        var final, e, level, separator;
+        separator = "/";
+        for(i = 0; i < len; i++) {
+            if (result[i].name.indexOf("\\") !== -1) {
+                separator = "\\";
+                break;
+            }
+        }
+        for(i = 0; i < len; i++) {
+            e = result[i];
+            level = (e.name.split(separator).length - 1);
+            if(!e.name.match(/\.php$/)) {
+                parents[level + 1] = e;
+                parents[level]._values.push(e);
+            } else {
+                parents[level]._values.push(e);
+            }
+        }
+        final = parents[1];
+        return [final];
+    }
+
+
+
+</script>
+<script type="text/javascript">
+
+    function updateMaintainabilityChart() {
+        chartMaintainability();
+    };
+
+    function chartMaintainability() {
+        var maxHeight = document.getElementById('svg-maintainability').offsetHeight,
+            maxWidth = document.getElementById('svg-maintainability').offsetWidth,
+            format = d3.format(",d"),
+            color = d3.scale.category20c();
+
+        var bubble = d3.layout.pack()
+            .sort(null)
+            .size([maxWidth, maxHeight])
+            .padding(1.5);
+
+        var r = d3.scale.linear().range([1, maxWidth / 4]).domain([1, 100]);
+        var x = d3.scale.linear().range([1, maxWidth]);
+        var y = d3.scale.linear().range([1, maxHeight]);
+
+
+
+        d3.select("#svg-maintainability").html("<svg></svg>");
+        var svg = d3.select("#svg-maintainability").select("svg")
+            .attr("width", maxWidth)
+            .attr("height", maxHeight)
+            .attr("class", "bubble");
+
+
+        // accessibility for colorblind
+        var defs= svg.append('defs');
+        defs.append('pattern')
+                    .attr('id', 'hash-warning')
+                    .attr('patternUnits', 'userSpaceOnUse')
+                    .attr('width', 4)
+                    .attr('height', 4)
+                    .append('path')
+                        .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+                        .attr('stroke', '#000000')
+                        .attr('stroke-width', 1);
+        defs.append('pattern')
+                    .attr('id', 'hash-critical')
+                    .attr('patternUnits', 'userSpaceOnUse')
+                    .attr('width', 4)
+                    .attr('height', 4)
+                    .append('path')
+                        .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+                        .attr('stroke', '#000000')
+                        .attr('stroke-width', 3);
+        defs.append('pattern')
+                .attr('id', 'hash-good')
+                .attr('patternUnits', 'userSpaceOnUse')
+                .attr('width', 5)
+                .attr('height', 5)
+                .append('circle')
+                    .attr('cx', 2)
+                    .attr('cy', 2)
+                    .attr('r', 2)
+                    .attr('style', "stroke:none;fill:#eee");
+
+        // initialization
+        d3
+            .select('#svg-maintainability')
+            .datum(data)
+            .call(bubble)
+                ;
+
+        var node = svg.selectAll(".node")
+            .data(
+                bubble.nodes(mapDatas(data))
+                .filter(function(d) { return !d.children; })
+            )
+            .enter().append("g")
+            .attr("class", "node");
+
+            node
+                .append('circle')
+                // uncomment following line if you want fixed size for your bubble (cyclo=1 => size=1)
+                //.attr("r", function(d) { return r(d.value);})
+                .attr("r", function(d) { return d.r; })
+                .attr("x", function(d) { return x(d.x)})
+                .attr("y", function(d) { return y(d.y)})
+
+                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+                // events
+                .on('mouseover', function(d) {
+                    var text = '<strong>' + d.name + '</strong>'
+                            + "<br />Cyclomatic Complexity : " + format(d.cyclomaticComplexity)
+                            + "<br />Maintainability Index: " + format(d.maintainabilityIndex);
+                    d3.select('.tooltip').html(text);
+                    d3.select(".tooltip").style("opacity", 1);
+                })
+                .on('mousemove', function() {
+                    d3.select(".tooltip")
+                            .style("left", (d3.event.pageX + 5) + "px")
+                            .style("top",  (d3.event.pageY + 5) + "px");
+                })
+                .on('mouseout', function() {
+                    d3.select(".tooltip").style("opacity", 0);
+                })
+                // for colorblinds
+                .style("fill", function(d) {
+                    if(accessibilityEnabled) {
+                        return 'url(#hash-'+ validate('maintainabilityIndex', d.maintainabilityIndex) +')'
+                    }
+                    switch(validate('maintainabilityIndex', d.maintainabilityIndex)) {
+                        case 'good':
+                            return '#78BA00';
+                        case 'warning':
+                            return '#F4B300';
+                        case 'critical':
+                            return '#FF2E12';
+                        default:
+                            return '#CCCCCC';
+                    }
+                })
+                .style('stroke-width', function(d) {
+                    return accessibilityEnabled ? 1 : 0;
+                })
+                .style('stroke', '#000')
+        ;
+
+        // tooltip
+        d3.select("body")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
+        // Save as
+        function mapDatas(root) {
+            var datas = [];
+            var i, color;
+            for(i in root) {
+                var e = root[i];
+                datas.push({
+                    "value": parseFloat(e.cyclomaticComplexity) + 1
+                    , "name": e.filename
+                    , "cyclomaticComplexity": parseFloat(e.cyclomaticComplexity)
+                    , "maintainabilityIndex": parseInt(e.maintainabilityIndex)
+                });
+            }
+            return {"children":datas};
+        }
+
+        d3.select(self.frameElement).style("height", maxWidth + "px");
+
+
+        // Save as
+        document.getElementById('btn-save-maintainability').onmouseover = function() {
+            var e = this;
+            if(e.className != 'initialized') {
+                var svgc  = document.getElementById('svg-maintainability').childNodes[0]
+                        , xml  = new XMLSerializer().serializeToString(svgc)
+                        , xmldata = btoa(xml);
+                e.href = 'data:application/octet-stream;base64,' + xmldata;
+                e.className = 'initialized';
+            }
+        };
+
+
+    }
+
+
+
+
+
+
+</script>
+<script type="text/javascript">
+
+
+
+    function updateCustomChart() {
+        chartCustom(xAxis, yAxis, rAxis);
+        document.getElementById('title-custom').innerHTML = textify(xAxis) + ' / ' + textify(yAxis);
+    };
+
+
+    function chartCustom(xData, yData, rData) {
+
+
+        var chart;
+        document.getElementById('svg-custom').innerHTML = '<svg />';
+        nv.addGraph(function() {
+            chart = nv.models.scatterChart()
+                    .showDistX(true)
+                    .showDistY(true)
+                    .showLegend(false)
+                    .useVoronoi(false)
+                    .color(d3.scale.category10().range())
+                    .transitionDuration(300)
+            ;
+
+            chart.xAxis.tickFormat(d3.format('.02f')).axisLabel(textify(xData));
+            chart.yAxis.tickFormat(d3.format('.02f')).axisLabel(textify(yData));
+            chart.tooltipContent(function(key, x, y, e, graph) {
+                return '<h2>' + e.point.title + '</h2>';
+            });
+            chart.scatter.useVoronoi(false);
+
+
+            d3.select("#svg-custom").select("svg")
+                    .attr("width",380)
+                    .attr("height",300)
+                    .datum(mapDatas(data))
+                    .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            chart.dispatch.on('stateChange', function(e) { ('New State:', JSON.stringify(e)); });
+
+
+            // Save as
+            var svg  = document.getElementById('svg-custom').childNodes[0],
+                    xml  = new XMLSerializer().serializeToString(svg),
+                    xmldata = btoa(xml),
+                    img  = new Image();
+            document.getElementById('btn-save-custom').href =  'data:application/octet-stream;base64,' + xmldata;
+
+
+            return chart;
+        });
+
+
+        function mapDatas(root) {
+            var results = [
+                { key: textify(xData) + " / " + textify(yData) + " chart", "values": [] }
+            ];
+            var i;
+            for(i in root) {
+                var e = root[i];
+                results[0].values.push({
+                    "title": e.filename
+                    , "x": Math.max(0,parseFloat(e[xData]))
+                    , "y": Math.max(0,parseFloat(e[yData]))
+                    , size: Math.max(0,parseFloat(e[rData]))
+                    , shape: 'round'
+                });
+            }
+            return results;
+        }
+
+    }
+
+
+</script>
+<script type="text/javascript">
+
+    function updateAbstractnessChart() {
+            chartAbstractness();
+    };
+
+    function chartAbstractness() {
+        if(chartAbstractness.initiazed) return;
+        chartAbstractness.initiazed = true;
+
+        var xData = 'abstractness';
+        var yData = 'instability';
+        var rData = 'loc';
+
+        var chart;
+        nv.addGraph(function() {
+            chart = nv.models.scatterChart()
+                    .showDistX(true)
+                    .showDistY(true)
+                    .useVoronoi(false)
+                    .showLegend(false)
+                    .color(d3.scale.category10().range())
+                    .transitionDuration(300)
+                    .forceY([0, 1])
+                    .forceX([0, 1])
+            ;
+
+            chart.xAxis.tickFormat(d3.format('.02f'))
+                    .axisLabel('Abstractness');
+            chart.yAxis.tickFormat(d3.format('.02f'))
+                    .axisLabel('Instability')
+            chart.tooltipContent(function(key, x, y, e, graph) {
+                return '<h2>' + e.point.name + '</h2>';
+            });
+            chart.scatter.useVoronoi(false);
+
+            d3.select("#svg-abstractness").select("svg")
+                    .attr("width",380)
+                    .attr("height",300)
+                    .attr("class",'svg')
+                    .datum(mapDatas(groupedData))
+                    .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            chart.dispatch.on('stateChange', function(e) { ('New State:', JSON.stringify(e)); });
+
+
+            // line (legend)
+            chart = nv.models.lineChart()
+                    .options({
+                        margin: {left: 75, bottom: 50},
+                        x: function(d,i) { return i},
+                        showXAxis: false,
+                        showYAxis: false,
+                        showLegend: false,
+                        transitionDuration: 300
+                    })
+                    .forceY([0, 1])
+                    .forceX([0, 1])
+            ;
+
+            d3.select("#svg-abstractness").select("svg")
+                    .datum([{key:" ", values:[ {x:0, y:1}, {x:1, y:0}  ]  , color: '#EEE'  }])
+                    .attr("width",380)
+                    .attr("height",300)
+                    .call(chart);
+
+
+
+            // btn save as
+            var svg = document.getElementById('svg-abstractness').childNodes[0],
+                    xml  = new XMLSerializer().serializeToString(svg),
+                    xmldata = btoa(xml);
+            document.getElementById('btn-save-abstractness').href = 'data:application/octet-stream;base64,' + xmldata;
+
+            return chart;
+        });
+
+        function mapDatas(root) {
+            var results = [
+                { key: textify(xData) + " / " + textify(yData) + " chart", "values": [] }
+            ];
+            var i;
+            for(i in root) {
+                var e = root[i];
+                results[0].values.push({
+                    "name": e.name
+                    , "x": Math.max(0,parseFloat(e[xData]))
+                    , "y": Math.max(0,parseFloat(e[yData]))
+                    , size: Math.max(0,parseFloat([rData]))
+                    , shape: 'round'
+                });
+            }
+            return results;
+        }
+    }
+</script>
+<script type="text/javascript">
+    /**
+     * Thank's to http://bl.ocks.org/mbostock/raw/7607999/
+     */
+    var relations = [{"name":"\\Samshal\\Acl\\Acl","size":3000,"relations":["\\Samshal\\Acl\\Acl","\\Samshal\\Acl\\RoleRegistry","\\Samshal\\Acl\\ResourceRegistry","\\Samshal\\Acl\\PermissionRegistry","\\Samshal\\Acl\\GlobalRegistry","\\Exception"]},{"name":"\\Samshal\\Acl\\AclInterface","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\Permission\\DefaultPermission","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\Permission\\PermissionInterface","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\Registry\\GlobalRegistry","size":3000,"relations":["\\Samshal\\Acl\\Registry\\Registry","\\Samshal\\Acl\\Registry\\Exception"]},{"name":"\\Samshal\\Acl\\Registry\\PermissionRegistry","size":3000,"relations":["\\Samshal\\Acl\\Registry\\Registry"]},{"name":"\\Samshal\\Acl\\Registry\\Registry","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\Registry\\RegistryInterface","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\Registry\\ResourceRegistry","size":3000,"relations":["\\Samshal\\Acl\\Registry\\Registry"]},{"name":"\\Samshal\\Acl\\Registry\\RoleRegistry","size":3000,"relations":["\\Samshal\\Acl\\Registry\\Registry"]},{"name":"\\Samshal\\Acl\\Resource\\DefaultResource","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\Resource\\ResourceInterface","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\Role\\DefaultRole","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\Role\\RoleInterface","size":3000,"relations":[]},{"name":"\\Samshal\\Acl\\RoleRegistry","relations":[],"size":3000},{"name":"\\Samshal\\Acl\\ResourceRegistry","relations":[],"size":3000},{"name":"\\Samshal\\Acl\\PermissionRegistry","relations":[],"size":3000},{"name":"\\Samshal\\Acl\\GlobalRegistry","relations":[],"size":3000},{"name":"\\Exception","relations":[],"size":3000},{"name":"\\Samshal\\Acl\\Registry\\Exception","relations":[],"size":3000}];
+
+    function updateRelationsChart() {
+
+        if(updateRelationsChart.initiazed) return;
+        updateRelationsChart.initiazed = true;
+
+        var diameter = 960,
+                radius = diameter / 2,
+                innerRadius = radius - 120;
+
+        var cluster = d3.layout.cluster()
+                .size([360, innerRadius])
+                .sort(null)
+                .value(function(d) { return d.size; });
+
+        var bundle = d3.layout.bundle();
+
+        var line = d3.svg.line.radial()
+                .interpolate("bundle")
+                .tension(.85)
+                .radius(function(d) { return d.y; })
+                .angle(function(d) { return d.x / 180 * Math.PI; });
+
+        var svg = d3.select("#svg-relations").select("svg")
+                .attr("width", diameter)
+                .attr("height", diameter)
+                .append("g")
+                .attr("transform", "translate(" + radius + "," + radius + ")");
+
+        var link = svg.append("g").selectAll(".link"),
+                node = svg.append("g").selectAll(".node");
+
+
+
+        var nodes = cluster.nodes(packageHierarchy(relations)),
+                links = packageImports(nodes);
+        link = link
+                .data(bundle(links))
+                .enter().append("path")
+                .each(function(d) { d.source = d[0], d.target = d[d.length - 1]; })
+                .attr("class", "link")
+                .attr("d", line);
+
+        node = node
+                .data(nodes.filter(function(n) { return !n.children; }))
+                .enter().append("text")
+                .attr("class", "node")
+                .attr("dy", ".31em")
+                .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
+                .style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+                .text(function(d) { return d.key; })
+                .on("mouseover", mouseovered)
+                .on("mouseout", mouseouted);
+
+
+//        d3.data(relations);
+
+        function mouseovered(d) {
+            node
+                    .each(function(n) { n.target = n.source = false; });
+
+            link
+                    .classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
+                    .classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
+                    .filter(function(l) { return l.target === d || l.source === d; })
+                    .each(function() { this.parentNode.appendChild(this); });
+
+            node
+                    .classed("node--target", function(n) { return n.target; })
+                    .classed("node--source", function(n) { return n.source; });
+        }
+
+        function mouseouted(d) {
+            link
+                    .classed("link--target", false)
+                    .classed("link--source", false);
+
+            node
+                    .classed("node--target", false)
+                    .classed("node--source", false);
+        }
+
+        d3.select(self.frameElement).style("height", diameter + "px");
+
+        // Lazily construct the package hierarchy from class names.
+        function packageHierarchy(classes) {
+            var map = {};
+
+            function find(name, data) {
+                name = (data ? name + ' ' : name);
+                var node = map[name], i;
+                if (!node) {
+                    node = map[name] = data || {name: name, children: []};
+                    if (name.length) {
+                        node.parent = find(name.substring(0, i = name.lastIndexOf("\\")));
+                        if(!node.parent.children) {
+                            node.parent.children = []; // fix anomalies
+                        }
+                        node.parent.children.push(node);
+                        node.key = name.substring(i + 1);
+                    }
+                }
+                return node;
+            }
+
+            classes.forEach(function(d) {
+                find(d.name, d);
+            });
+
+            return map[""];
+        }
+
+        // Return a list of imports for the given array of nodes.
+        function packageImports(nodes) {
+            var map = {},
+                    imports = [];
+
+            // Compute a map from name to node.
+            nodes.forEach(function(d) {
+                map[d.name] = d;
+            });
+
+            // For each import, construct a link from the source to target node.
+            nodes.forEach(function(d) {
+                if (d.relations) d.relations.forEach(function(i) {
+                    imports.push({source: map[d.name], target: map[i]});
+                });
+            });
+
+            return imports;
+        }
+
+
+    }
+
+
+    // Save as
+    document.getElementById('btn-save-relations').onmouseover = function() {
+        var e = this;
+        if(e.className != 'initialized') {
+            var svgc  = document.getElementById('svg-relations').childNodes[0]
+                    , xml  = new XMLSerializer().serializeToString(svgc)
+                    , xmldata = btoa(xml);
+            e.href = 'data:application/octet-stream;base64,' + xmldata;
+            e.className = 'initialized';
+        }
+    };
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    document.onreadystatechange = function() {
+        if(document.readyState == 'complete') {
+            // init tabs
+            document.getElementById('link-overview').onclick = function() { displayTab(this, 'overview'); updateAbstractnessChart(); updateCustomChart(); updateMaintainabilityChart(); };
+            document.getElementById('link-score').onclick = function() { displayTab(this, 'score'); updateScoreChart(); };
+            document.getElementById('link-relations').onclick = function() { displayTab(this, 'relations'); updateRelationsChart(); };
+            document.getElementById('link-explore').onclick = function() { displayTab(this, 'explore'); updateTableView(); };
+            document.getElementById('link-repartition').onclick = function() { displayTab(this, 'repartition'); };
+            document.getElementById('link-help').onclick = function() { displayTab(this, 'help')};
+            document.getElementById('menu').firstElementChild.onclick();
+
+            // selects
+            document.getElementById('xAxis').value = xAxis;
+            document.getElementById('yAxis').value = yAxis;
+            document.getElementById('rAxis').value = rAxis;
+
+            
+        }
+    }
+
+
+    // default selected elements
+    var xAxis = 'lcom';
+    var yAxis = 'cyclomaticComplexity';
+    var rAxis = 'loc';
+
+
+
+        var data = [{"filename":".\/src\/Acl.php","name":".\/src\/Acl.php","loc":394,"logicalLoc":63,"volume":3236.43,"length":518,"vocabulary":76,"effort":110622.12,"difficulty":"34.18","time":6146,"bugs":1.08,"intelligentContent":94.69,"maintainabilityIndexWithoutComment":"33.21","maintainabilityIndex":"71.62","commentWeight":38.41,"instability":0.86,"afferentCoupling":1,"efferentCoupling":6,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":12,"cyclomaticComplexity":22,"myerInterval":"22:23","myerDistance":1,"operators":1,"lcom":2,"sysc":38,"rsysc":3.17,"dc":13,"rdc":1.08,"sc":25,"rsc":2.08},{"filename":".\/src\/AclInterface.php","name":".\/src\/AclInterface.php","loc":79,"logicalLoc":8,"volume":140.18,"length":33,"vocabulary":19,"effort":189.66,"difficulty":"1.35","time":11,"bugs":0.05,"intelligentContent":103.61,"maintainabilityIndexWithoutComment":"65.13","maintainabilityIndex":"114.04","commentWeight":48.91,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":6,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":11,"rsysc":1.83,"dc":11,"rdc":1.83,"sc":0,"rsc":0},{"filename":".\/src\/Permission\/DefaultPermission.php","name":".\/src\/Permission\/DefaultPermission.php","loc":49,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.11","commentWeight":45.19,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},{"filename":".\/src\/Permission\/PermissionInterface.php","name":".\/src\/Permission\/PermissionInterface.php","loc":35,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.23","commentWeight":48.3,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/GlobalRegistry.php","name":".\/src\/Registry\/GlobalRegistry.php","loc":51,"logicalLoc":9,"volume":392.55,"length":80,"vocabulary":30,"effort":4448.91,"difficulty":"11.33","time":247,"bugs":0.13,"intelligentContent":34.64,"maintainabilityIndexWithoutComment":"60.35","maintainabilityIndex":"102.89","commentWeight":42.54,"instability":1,"afferentCoupling":0,"efferentCoupling":1,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":1,"cyclomaticComplexity":5,"myerInterval":"5:5","myerDistance":0,"operators":0,"lcom":1,"sysc":2,"rsysc":2,"dc":1,"rdc":1,"sc":1,"rsc":1},{"filename":".\/src\/Registry\/PermissionRegistry.php","name":".\/src\/Registry\/PermissionRegistry.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1.14","time":2,"bugs":0.01,"intelligentContent":30.51,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":47.43,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/Registry.php","name":".\/src\/Registry\/Registry.php","loc":77,"logicalLoc":9,"volume":408.63,"length":85,"vocabulary":28,"effort":6282.61,"difficulty":"15.38","time":349,"bugs":0.14,"intelligentContent":26.58,"maintainabilityIndexWithoutComment":"60.09","maintainabilityIndex":"105.32","commentWeight":45.23,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":0,"nom":4,"cyclomaticComplexity":6,"myerInterval":"6:7","myerDistance":1,"operators":1,"lcom":1,"sysc":7,"rsysc":1.75,"dc":7,"rdc":1.75,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/RegistryInterface.php","name":".\/src\/Registry\/RegistryInterface.php","loc":52,"logicalLoc":6,"volume":83.76,"length":22,"vocabulary":14,"effort":104.7,"difficulty":"1.25","time":6,"bugs":0.03,"intelligentContent":67.01,"maintainabilityIndexWithoutComment":"69.43","maintainabilityIndex":"117.92","commentWeight":48.49,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":4,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":5,"rsysc":1.25,"dc":5,"rdc":1.25,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/ResourceRegistry.php","name":".\/src\/Registry\/ResourceRegistry.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1.14","time":2,"bugs":0.01,"intelligentContent":30.51,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":47.43,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/RoleRegistry.php","name":".\/src\/Registry\/RoleRegistry.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1.14","time":2,"bugs":0.01,"intelligentContent":30.51,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":47.43,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0},{"filename":".\/src\/Resource\/DefaultResource.php","name":".\/src\/Resource\/DefaultResource.php","loc":50,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.32","commentWeight":45.4,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},{"filename":".\/src\/Resource\/ResourceInterface.php","name":".\/src\/Resource\/ResourceInterface.php","loc":37,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.41","commentWeight":48.48,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0},{"filename":".\/src\/Role\/DefaultRole.php","name":".\/src\/Role\/DefaultRole.php","loc":50,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.32","commentWeight":45.4,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},{"filename":".\/src\/Role\/RoleInterface.php","name":".\/src\/Role\/RoleInterface.php","loc":35,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.23","commentWeight":48.3,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0}]
+    var groupedData = [{"name":".","childs":[],"depth":2,"abstractness":0.43,"instability":0.88,"average":{"filename":0,"name":0,"loc":69.21,"logicalLoc":9.36,"volume":351.73,"length":65.14,"vocabulary":20.07,"effort":8792.31,"difficulty":5.61,"time":488.57,"bugs":0.12,"intelligentContent":50.56,"maintainabilityIndexWithoutComment":68.88,"maintainabilityIndex":115.09,"commentWeight":46.21,"instability":0.13,"afferentCoupling":0.07,"efferentCoupling":0.5,"noc":1,"noca":0.43,"nocc":0.57,"noc-anon":0,"noi":0.36,"nom":3,"cyclomaticComplexity":3.14,"myerInterval":3.14,"myerDistance":0.14,"operators":0.14,"lcom":0.5,"sysc":5.36,"rsysc":1.04,"dc":3.5,"rdc":0.82,"sc":1.86,"rsc":0.22},"min":{"filename":".\/src\/Acl.php","name":".\/src\/Acl.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1","time":2,"bugs":0.01,"intelligentContent":26.58,"maintainabilityIndexWithoutComment":"33.21","maintainabilityIndex":"71.62","commentWeight":38.41,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":0,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0},"max":{"filename":".\/src\/Role\/RoleInterface.php","name":".\/src\/Role\/RoleInterface.php","loc":394,"logicalLoc":63,"volume":3236.43,"length":518,"vocabulary":76,"effort":110622.12,"difficulty":"34.18","time":6146,"bugs":1.08,"intelligentContent":103.61,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":48.91,"instability":1,"afferentCoupling":1,"efferentCoupling":6,"noc":1,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":12,"cyclomaticComplexity":22,"myerInterval":"6:7","myerDistance":1,"operators":1,"lcom":2,"sysc":38,"rsysc":3.17,"dc":13,"rdc":1.83,"sc":25,"rsc":2.08},"sum":{"filename":0,"name":0,"loc":969,"logicalLoc":131,"volume":4924.28,"length":912,"vocabulary":281,"effort":123092.32,"difficulty":78.49,"time":6840,"bugs":1.67,"intelligentContent":707.83,"maintainabilityIndexWithoutComment":964.26,"maintainabilityIndex":1611.2,"commentWeight":646.94,"instability":1.86,"afferentCoupling":1,"efferentCoupling":7,"noc":14,"noca":6,"nocc":8,"noc-anon":0,"noi":5,"nom":42,"cyclomaticComplexity":44,"myerInterval":44,"myerDistance":2,"operators":2,"lcom":7,"sysc":75,"rsysc":14.5,"dc":49,"rdc":11.41,"sc":26,"rsc":3.08}},{"name":".\/src","childs":[{"filename":".\/src\/Acl.php","name":".\/src\/Acl.php","loc":394,"logicalLoc":63,"volume":3236.43,"length":518,"vocabulary":76,"effort":110622.12,"difficulty":"34.18","time":6146,"bugs":1.08,"intelligentContent":94.69,"maintainabilityIndexWithoutComment":"33.21","maintainabilityIndex":"71.62","commentWeight":38.41,"instability":0.86,"afferentCoupling":1,"efferentCoupling":6,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":12,"cyclomaticComplexity":22,"myerInterval":"22:23","myerDistance":1,"operators":1,"lcom":2,"sysc":38,"rsysc":3.17,"dc":13,"rdc":1.08,"sc":25,"rsc":2.08},{"filename":".\/src\/AclInterface.php","name":".\/src\/AclInterface.php","loc":79,"logicalLoc":8,"volume":140.18,"length":33,"vocabulary":19,"effort":189.66,"difficulty":"1.35","time":11,"bugs":0.05,"intelligentContent":103.61,"maintainabilityIndexWithoutComment":"65.13","maintainabilityIndex":"114.04","commentWeight":48.91,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":6,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":11,"rsysc":1.83,"dc":11,"rdc":1.83,"sc":0,"rsc":0}],"depth":2,"abstractness":0.43,"instability":0.88,"average":{"filename":0,"name":0,"loc":69.21,"logicalLoc":9.36,"volume":351.73,"length":65.14,"vocabulary":20.07,"effort":8792.31,"difficulty":5.61,"time":488.57,"bugs":0.12,"intelligentContent":50.56,"maintainabilityIndexWithoutComment":68.88,"maintainabilityIndex":115.09,"commentWeight":46.21,"instability":0.13,"afferentCoupling":0.07,"efferentCoupling":0.5,"noc":1,"noca":0.43,"nocc":0.57,"noc-anon":0,"noi":0.36,"nom":3,"cyclomaticComplexity":3.14,"myerInterval":3.14,"myerDistance":0.14,"operators":0.14,"lcom":0.5,"sysc":5.36,"rsysc":1.04,"dc":3.5,"rdc":0.82,"sc":1.86,"rsc":0.22},"min":{"filename":".\/src\/Acl.php","name":".\/src\/Acl.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1","time":2,"bugs":0.01,"intelligentContent":26.58,"maintainabilityIndexWithoutComment":"33.21","maintainabilityIndex":"71.62","commentWeight":38.41,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":0,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0},"max":{"filename":".\/src\/Role\/RoleInterface.php","name":".\/src\/Role\/RoleInterface.php","loc":394,"logicalLoc":63,"volume":3236.43,"length":518,"vocabulary":76,"effort":110622.12,"difficulty":"34.18","time":6146,"bugs":1.08,"intelligentContent":103.61,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":48.91,"instability":1,"afferentCoupling":1,"efferentCoupling":6,"noc":1,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":12,"cyclomaticComplexity":22,"myerInterval":"6:7","myerDistance":1,"operators":1,"lcom":2,"sysc":38,"rsysc":3.17,"dc":13,"rdc":1.83,"sc":25,"rsc":2.08},"sum":{"filename":0,"name":0,"loc":969,"logicalLoc":131,"volume":4924.28,"length":912,"vocabulary":281,"effort":123092.32,"difficulty":78.49,"time":6840,"bugs":1.67,"intelligentContent":707.83,"maintainabilityIndexWithoutComment":964.26,"maintainabilityIndex":1611.2,"commentWeight":646.94,"instability":1.86,"afferentCoupling":1,"efferentCoupling":7,"noc":14,"noca":6,"nocc":8,"noc-anon":0,"noi":5,"nom":42,"cyclomaticComplexity":44,"myerInterval":44,"myerDistance":2,"operators":2,"lcom":7,"sysc":75,"rsysc":14.5,"dc":49,"rdc":11.41,"sc":26,"rsc":3.08}},{"name":".\/src\/Permission","childs":[{"filename":".\/src\/Permission\/DefaultPermission.php","name":".\/src\/Permission\/DefaultPermission.php","loc":49,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.11","commentWeight":45.19,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},{"filename":".\/src\/Permission\/PermissionInterface.php","name":".\/src\/Permission\/PermissionInterface.php","loc":35,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.23","commentWeight":48.3,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0}],"depth":3,"abstractness":0.5,"instability":0,"average":{"filename":0,"name":0,"loc":42,"logicalLoc":5,"volume":93.02,"length":23.5,"vocabulary":14.5,"effort":220.8,"difficulty":1.93,"time":12.5,"bugs":0.04,"intelligentContent":48.3,"maintainabilityIndexWithoutComment":71.43,"maintainabilityIndex":118.17,"commentWeight":46.75,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0.5,"nocc":0.5,"noc-anon":0,"noi":0.5,"nom":2.5,"cyclomaticComplexity":1,"myerInterval":1,"myerDistance":0,"operators":0,"lcom":0.5,"sysc":2,"rsysc":0.75,"dc":2,"rdc":0.75,"sc":0,"rsc":0},"min":{"filename":".\/src\/Permission\/DefaultPermission.php","name":".\/src\/Permission\/DefaultPermission.php","loc":35,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.11","commentWeight":45.19,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":0,"noc-anon":0,"noi":0,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0},"max":{"filename":".\/src\/Permission\/PermissionInterface.php","name":".\/src\/Permission\/PermissionInterface.php","loc":49,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.23","commentWeight":48.3,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},"sum":{"filename":0,"name":0,"loc":84,"logicalLoc":10,"volume":186.04,"length":47,"vocabulary":29,"effort":441.59,"difficulty":3.86,"time":25,"bugs":0.07,"intelligentContent":96.59,"maintainabilityIndexWithoutComment":142.85,"maintainabilityIndex":236.34,"commentWeight":93.49,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":2,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":5,"cyclomaticComplexity":2,"myerInterval":2,"myerDistance":0,"operators":0,"lcom":1,"sysc":4,"rsysc":1.5,"dc":4,"rdc":1.5,"sc":0,"rsc":0}},{"name":".\/src\/Registry","childs":[{"filename":".\/src\/Registry\/GlobalRegistry.php","name":".\/src\/Registry\/GlobalRegistry.php","loc":51,"logicalLoc":9,"volume":392.55,"length":80,"vocabulary":30,"effort":4448.91,"difficulty":"11.33","time":247,"bugs":0.13,"intelligentContent":34.64,"maintainabilityIndexWithoutComment":"60.35","maintainabilityIndex":"102.89","commentWeight":42.54,"instability":1,"afferentCoupling":0,"efferentCoupling":1,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":1,"cyclomaticComplexity":5,"myerInterval":"5:5","myerDistance":0,"operators":0,"lcom":1,"sysc":2,"rsysc":2,"dc":1,"rdc":1,"sc":1,"rsc":1},{"filename":".\/src\/Registry\/PermissionRegistry.php","name":".\/src\/Registry\/PermissionRegistry.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1.14","time":2,"bugs":0.01,"intelligentContent":30.51,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":47.43,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/Registry.php","name":".\/src\/Registry\/Registry.php","loc":77,"logicalLoc":9,"volume":408.63,"length":85,"vocabulary":28,"effort":6282.61,"difficulty":"15.38","time":349,"bugs":0.14,"intelligentContent":26.58,"maintainabilityIndexWithoutComment":"60.09","maintainabilityIndex":"105.32","commentWeight":45.23,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":0,"nom":4,"cyclomaticComplexity":6,"myerInterval":"6:7","myerDistance":1,"operators":1,"lcom":1,"sysc":7,"rsysc":1.75,"dc":7,"rdc":1.75,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/RegistryInterface.php","name":".\/src\/Registry\/RegistryInterface.php","loc":52,"logicalLoc":6,"volume":83.76,"length":22,"vocabulary":14,"effort":104.7,"difficulty":"1.25","time":6,"bugs":0.03,"intelligentContent":67.01,"maintainabilityIndexWithoutComment":"69.43","maintainabilityIndex":"117.92","commentWeight":48.49,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":4,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":5,"rsysc":1.25,"dc":5,"rdc":1.25,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/ResourceRegistry.php","name":".\/src\/Registry\/ResourceRegistry.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1.14","time":2,"bugs":0.01,"intelligentContent":30.51,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":47.43,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0},{"filename":".\/src\/Registry\/RoleRegistry.php","name":".\/src\/Registry\/RoleRegistry.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1.14","time":2,"bugs":0.01,"intelligentContent":30.51,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":47.43,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0}],"depth":3,"abstractness":0.33,"instability":1,"average":{"filename":0,"name":0,"loc":40,"logicalLoc":5,"volume":164.93,"length":36.67,"vocabulary":16.5,"effort":1825.96,"difficulty":5.23,"time":101.33,"bugs":0.06,"intelligentContent":36.63,"maintainabilityIndexWithoutComment":72.9,"maintainabilityIndex":119.32,"commentWeight":46.43,"instability":0.17,"afferentCoupling":0,"efferentCoupling":0.17,"noc":1,"noca":0.33,"nocc":0.67,"noc-anon":0,"noi":0.17,"nom":1.5,"cyclomaticComplexity":2.5,"myerInterval":2.5,"myerDistance":0.17,"operators":0.17,"lcom":0.33,"sysc":2.33,"rsysc":0.83,"dc":2.17,"rdc":0.67,"sc":0.17,"rsc":0.17},"min":{"filename":".\/src\/Registry\/GlobalRegistry.php","name":".\/src\/Registry\/GlobalRegistry.php","loc":20,"logicalLoc":2,"volume":34.87,"length":11,"vocabulary":9,"effort":39.85,"difficulty":"1.14","time":2,"bugs":0.01,"intelligentContent":26.58,"maintainabilityIndexWithoutComment":"60.09","maintainabilityIndex":"102.89","commentWeight":42.54,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":0,"noc-anon":0,"noi":0,"nom":0,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":0,"rsysc":0,"dc":0,"rdc":0,"sc":0,"rsc":0},"max":{"filename":".\/src\/Registry\/RoleRegistry.php","name":".\/src\/Registry\/RoleRegistry.php","loc":77,"logicalLoc":9,"volume":408.63,"length":85,"vocabulary":30,"effort":6282.61,"difficulty":"15.38","time":349,"bugs":0.14,"intelligentContent":67.01,"maintainabilityIndexWithoutComment":"82.5","maintainabilityIndex":"129.93","commentWeight":48.49,"instability":1,"afferentCoupling":0,"efferentCoupling":1,"noc":1,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":4,"cyclomaticComplexity":6,"myerInterval":"6:7","myerDistance":1,"operators":1,"lcom":1,"sysc":7,"rsysc":2,"dc":7,"rdc":1.75,"sc":1,"rsc":1},"sum":{"filename":0,"name":0,"loc":240,"logicalLoc":30,"volume":989.55,"length":220,"vocabulary":99,"effort":10955.77,"difficulty":31.38,"time":608,"bugs":0.33,"intelligentContent":219.76,"maintainabilityIndexWithoutComment":437.37,"maintainabilityIndex":715.92,"commentWeight":278.55,"instability":1,"afferentCoupling":0,"efferentCoupling":1,"noc":6,"noca":2,"nocc":4,"noc-anon":0,"noi":1,"nom":9,"cyclomaticComplexity":15,"myerInterval":15,"myerDistance":1,"operators":1,"lcom":2,"sysc":14,"rsysc":5,"dc":13,"rdc":4,"sc":1,"rsc":1}},{"name":".\/src\/Resource","childs":[{"filename":".\/src\/Resource\/DefaultResource.php","name":".\/src\/Resource\/DefaultResource.php","loc":50,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.32","commentWeight":45.4,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},{"filename":".\/src\/Resource\/ResourceInterface.php","name":".\/src\/Resource\/ResourceInterface.php","loc":37,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.41","commentWeight":48.48,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0}],"depth":3,"abstractness":0.5,"instability":0,"average":{"filename":0,"name":0,"loc":43.5,"logicalLoc":5,"volume":93.02,"length":23.5,"vocabulary":14.5,"effort":220.8,"difficulty":1.93,"time":12.5,"bugs":0.04,"intelligentContent":48.3,"maintainabilityIndexWithoutComment":71.43,"maintainabilityIndex":118.37,"commentWeight":46.94,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0.5,"nocc":0.5,"noc-anon":0,"noi":0.5,"nom":2.5,"cyclomaticComplexity":1,"myerInterval":1,"myerDistance":0,"operators":0,"lcom":0.5,"sysc":2,"rsysc":0.75,"dc":2,"rdc":0.75,"sc":0,"rsc":0},"min":{"filename":".\/src\/Resource\/DefaultResource.php","name":".\/src\/Resource\/DefaultResource.php","loc":37,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.32","commentWeight":45.4,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":0,"noc-anon":0,"noi":0,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0},"max":{"filename":".\/src\/Resource\/ResourceInterface.php","name":".\/src\/Resource\/ResourceInterface.php","loc":50,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.41","commentWeight":48.48,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},"sum":{"filename":0,"name":0,"loc":87,"logicalLoc":10,"volume":186.04,"length":47,"vocabulary":29,"effort":441.59,"difficulty":3.86,"time":25,"bugs":0.07,"intelligentContent":96.59,"maintainabilityIndexWithoutComment":142.85,"maintainabilityIndex":236.73,"commentWeight":93.88,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":2,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":5,"cyclomaticComplexity":2,"myerInterval":2,"myerDistance":0,"operators":0,"lcom":1,"sysc":4,"rsysc":1.5,"dc":4,"rdc":1.5,"sc":0,"rsc":0}},{"name":".\/src\/Role","childs":[{"filename":".\/src\/Role\/DefaultRole.php","name":".\/src\/Role\/DefaultRole.php","loc":50,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.32","commentWeight":45.4,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":1,"noc-anon":0,"noi":0,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},{"filename":".\/src\/Role\/RoleInterface.php","name":".\/src\/Role\/RoleInterface.php","loc":35,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.23","commentWeight":48.3,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":0,"noc-anon":0,"noi":1,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0}],"depth":3,"abstractness":0.5,"instability":0,"average":{"filename":0,"name":0,"loc":42.5,"logicalLoc":5,"volume":93.02,"length":23.5,"vocabulary":14.5,"effort":220.8,"difficulty":1.93,"time":12.5,"bugs":0.04,"intelligentContent":48.3,"maintainabilityIndexWithoutComment":71.43,"maintainabilityIndex":118.28,"commentWeight":46.85,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0.5,"nocc":0.5,"noc-anon":0,"noi":0.5,"nom":2.5,"cyclomaticComplexity":1,"myerInterval":1,"myerDistance":0,"operators":0,"lcom":0.5,"sysc":2,"rsysc":0.75,"dc":2,"rdc":0.75,"sc":0,"rsc":0},"min":{"filename":".\/src\/Role\/DefaultRole.php","name":".\/src\/Role\/DefaultRole.php","loc":35,"logicalLoc":4,"volume":48.43,"length":14,"vocabulary":11,"effort":48.43,"difficulty":"1","time":3,"bugs":0.02,"intelligentContent":48.16,"maintainabilityIndexWithoutComment":"67.92","maintainabilityIndex":"113.32","commentWeight":45.4,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":0,"nocc":0,"noc-anon":0,"noi":0,"nom":2,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":0,"sysc":1,"rsysc":0.5,"dc":1,"rdc":0.5,"sc":0,"rsc":0},"max":{"filename":".\/src\/Role\/RoleInterface.php","name":".\/src\/Role\/RoleInterface.php","loc":50,"logicalLoc":6,"volume":137.61,"length":33,"vocabulary":18,"effort":393.16,"difficulty":"2.86","time":22,"bugs":0.05,"intelligentContent":48.43,"maintainabilityIndexWithoutComment":"74.93","maintainabilityIndex":"123.23","commentWeight":48.3,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":1,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":3,"cyclomaticComplexity":1,"myerInterval":"1:1","myerDistance":0,"operators":0,"lcom":1,"sysc":3,"rsysc":1,"dc":3,"rdc":1,"sc":0,"rsc":0},"sum":{"filename":0,"name":0,"loc":85,"logicalLoc":10,"volume":186.04,"length":47,"vocabulary":29,"effort":441.59,"difficulty":3.86,"time":25,"bugs":0.07,"intelligentContent":96.59,"maintainabilityIndexWithoutComment":142.85,"maintainabilityIndex":236.55,"commentWeight":93.7,"instability":0,"afferentCoupling":0,"efferentCoupling":0,"noc":2,"noca":1,"nocc":1,"noc-anon":0,"noi":1,"nom":5,"cyclomaticComplexity":2,"myerInterval":2,"myerDistance":0,"operators":0,"lcom":1,"sysc":4,"rsysc":1.5,"dc":4,"rdc":1.5,"sc":0,"rsc":0}}]
+    var ruleSet = {"cyclomaticComplexity":[10,6,2],"maintainabilityIndex":[0,69,85],"logicalLoc":[800,400,200],"volume":[1300,1000,300],"bugs":[0.35,0.25,0.15],"commentWeight":[36,38,41],"vocabulary":[51,34,27],"difficulty":[18,15,5.8],"instability":[1,0.95,0.45],"afferentCoupling":[20,15,9],"efferentCoupling":[15,11,7],"myerDistance":[10,5,2],"lcom":[3,2,1.5]}
+    
+    // accessibility for colorblinds
+    var accessibilityEnabled = false;
+
+    // fixes links to tab
+    // Javascript to enable link to tab
+//    var hash = document.location.hash;
+//    var prefix = "tab_";
+//    if (hash) {
+//        $('#menu a[href='+hash.replace(prefix,"")+']').tab('show');
+//    }
+//    // Change hash for page-reload
+//    $('#menu a').on('shown', function (e) {
+//        window.location.hash = e.target.hash.replace("#", "#" + prefix);
+//    });
+
+</script>
+
+
+</body>
+</html>

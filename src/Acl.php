@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 /**
  * This file is part of the Samshal\Acl library
@@ -94,20 +93,20 @@ class Acl implements AclInterface
 		$this->permissionRegistry = new PermissionRegistry();
 		$this->globalRegistry = new GlobalRegistry();
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
 	 * Initializes the global session array and sets them to the default value
 	 *
-	 * @return void 
+	 * @return void
 	 */
 	protected function initSession()
 	{
 		$this->session["query"] = true;
 		unset($this->session["role"], $this->session["status"]);
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
@@ -115,13 +114,15 @@ class Acl implements AclInterface
 	 *
 	 * @param string|RoleInterface $role;
 	 * @throws \Exception
-	 * @return AclInterface 
+	 * @return AclInterface
 	 */
 	public function __get($role)
 	{
 		if ($role === self::SYN_ALLOW || $role === self::SYN_DENY)
 		{
-			$this->session["status"] = ($role === self::SYN_ALLOW) ? true : false;
+			$this->session["status"] = ($role === self::SYN_ALLOW)
+                ? true : false # <- obsolete, conditions do escalate to a boolean
+            ;
 
 			if (!empty($this->session["role"]))
 			{
@@ -131,7 +132,14 @@ class Acl implements AclInterface
 			return $this;
 		}
 
-		if (!$this->roleRegistry->exists($role)) throw new \Exception(sprintf("The role: %s doesnt exist", (string)$role));
+		if (!$this->roleRegistry->exists($role)) {
+            throw new \Exception(
+                sprintf(
+                    "The role: %s doesnt exist",
+                    (string)$role
+                )
+            );
+        }
 
 		$this->session["role"] = $role;
 
@@ -148,20 +156,47 @@ class Acl implements AclInterface
 	 */
 	public function __call($permission, $args)
 	{
-		if (!$this->permissionRegistry->exists($permission)) throw new \Exception(sprintf("The permission: %s doesnt exist", (string)$permission));
-		if (!$this->resourceRegistry->exists($args[0])) throw new \Exception(sprintf("The resource: %s doesnt exist", (string)$args[0]));
+		if (!$this->permissionRegistry->exists($permission)) {
+            throw new \Exception(
+                sprintf(
+                    "The permission: %s doesnt exist",
+                    (string)$permission
+                )
+            );
+        }
+
+		if (!$this->resourceRegistry->exists($args[0])) {
+            throw new \Exception(
+                sprintf(
+                    "The resource: %s doesnt exist",
+                    (string)$args[0]
+                )
+            );
+        }
 
 		if ($this->session["query"])
 		{
-			$result = $this->getPermissionStatus($this->session["role"], $permission, $args[0]);
+			$result = $this->getPermissionStatus(
+                $this->session["role"],
+                $permission,
+                $args[0]
+            );
+
 			$this->initSession();
+
 			return $result;
 		}
 
-		$this->allow($this->session["role"], $permission, $args[0], $this->session["status"]);
+		$this->allow(
+            $this->session["role"],
+            $permission,
+            $args[0],
+            $this->session["status"]
+        );
+
 		$this->initSession();
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
@@ -179,7 +214,7 @@ class Acl implements AclInterface
 
 		$this->roleRegistry->save($role);
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
@@ -197,7 +232,7 @@ class Acl implements AclInterface
 
 		$this->resourceRegistry->save($resource);
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
@@ -215,11 +250,11 @@ class Acl implements AclInterface
 
 		$this->permissionRegistry->save($permission);
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
-	 * Adds objects lazily. 
+	 * Adds objects lazily.
 	 *
 	 * Automatically determine the type of an object and call the appropriate
 	 * add method on it.
@@ -242,9 +277,17 @@ class Acl implements AclInterface
 		{
 			$this->addPermission($object);
 		}
-		else throw new \Exception(sprintf("%s must implement one of RoleInterface, ResourceInterface and PermissionInterface", $object));
+		else {
+            throw new \Exception(
+                sprintf(
+                    "%s must implement one of RoleInterface, '.
+                    'ResourceInterface and PermissionInterface",
+                    $object
+                )
+            );
+        }
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
@@ -257,15 +300,38 @@ class Acl implements AclInterface
 	 * @throws \Exception
 	 * @return void
 	 */
-	public function allow($role, $permission, $resource, $status=true)
+	public function allow($role, $permission, $resource, $status = true)
 	{
-		if (!$this->roleRegistry->exists($role)) throw new \Exception(sprintf("The role: %s doesnt exist", (string)$role));
-		if (!$this->permissionRegistry->exists($permission)) throw new \Exception(sprintf("The permission: %s doesnt exist", (string)$permission));
-		if (!$this->resourceRegistry->exists($resource)) throw new \Exception(sprintf("The resource: %s doesnt exist", (string)$resource));
+		if (!$this->roleRegistry->exists($role)) {
+            throw new \Exception(
+                sprintf(
+                    "The role: %s doesnt exist",
+                    (string)$role
+                )
+            );
+        }
+
+		if (!$this->permissionRegistry->exists($permission)) {
+            throw new \Exception(
+                sprintf(
+                    "The permission: %s doesnt exist",
+                    (string)$permission
+                )
+            );
+        }
+
+		if (!$this->resourceRegistry->exists($resource)) {
+            throw new \Exception(
+                sprintf(
+                    "The resource: %s doesnt exist",
+                    (string)$resource
+                )
+            );
+        }
 
 		$this->globalRegistry->save($role, $resource, $permission, $status);
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
@@ -280,7 +346,7 @@ class Acl implements AclInterface
 	{
 		$this->allow($role, $permission, $resource, false);
 
-		return;
+		return; # <- obsolete
 	}
 
 	/**
@@ -293,9 +359,33 @@ class Acl implements AclInterface
 	 */
 	public function getPermissionStatus($role, $permission, $resource)
 	{
-		if (!$this->roleRegistry->exists($role)) throw new \Exception(sprintf("The role: %s doesnt exist", (string)$role));
-		if (!$this->permissionRegistry->exists($permission)) throw new \Exception(sprintf("The permission: %s doesnt exist", (string)$permission));
-		if (!$this->resourceRegistry->exists($resource)) throw new \Exception(sprintf("The resource: %s doesnt exist", (string)$resource));
+		if (!$this->roleRegistry->exists($role)) {
+            throw new \Exception(
+                sprintf(
+                    "The role: %s doesnt exist",
+                    (string)$role
+                )
+            );
+        }
+
+		if (!$this->permissionRegistry->exists($permission)) {
+            throw new \Exception(
+                sprintf(
+                    "The permission: %s doesnt exist",
+                    (string)$permission
+                )
+            );
+        }
+
+		if (!$this->resourceRegistry->exists($resource)) {
+            throw new \Exception(
+                sprintf(
+                    "The resource: %s doesnt exist",
+                    (string)$resource
+                )
+            );
+        }
+
 
 		$role = $this->globalRegistry->get($role);
 

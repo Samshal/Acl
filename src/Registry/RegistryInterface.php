@@ -1,5 +1,4 @@
-<?php
-declare (strict_types=1);
+<?php declare (strict_types=1);
 
 /**
  * This file is part of the Samshal\Acl library
@@ -20,7 +19,7 @@ namespace Samshal\Acl\Registry;
 interface RegistryInterface
 {
     /**
-     * Adds a new value to the global registry 
+     * Adds a new value to the global registry
      *
      * @param string $object
      * @return void
