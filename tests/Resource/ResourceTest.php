@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_type=1);
+<?php declare(strict_types=1);
 /**
  * @license MIT
  * @author Samuel Adeshina <samueladeshina73@gmail.com>

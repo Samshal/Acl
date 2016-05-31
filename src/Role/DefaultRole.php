@@ -8,7 +8,7 @@
  */
 namespace Samshal\Acl\Role;
 
-use Samshal\Acl\ObjectInterface;
+use Samshal\Acl\ObjectInterface as ObjectInterface;
 /**
  * class DefaultRole.
  *

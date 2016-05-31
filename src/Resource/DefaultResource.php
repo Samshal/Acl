@@ -8,7 +8,7 @@
  */
 namespace Samshal\Acl\Resource;
 
-use Samshal\Acl\ObjectInterface;
+use Samshal\Acl\ObjectInterface as ObjectInterface;
 
 /**
  * Class DefaultResource.
