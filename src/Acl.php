@@ -197,9 +197,12 @@ class Acl implements AclInterface
 	 * @param string $role
 	 * @return void
 	 */
-	public function addRole(string $role)
+	public function addRole(string ...$role)
 	{
-		$this->roleRegistry->save($role);
+		foreach ($role as $_role)
+		{
+			$this->roleRegistry->save($_role);
+		}
 	}
 
 	/**
@@ -208,9 +211,12 @@ class Acl implements AclInterface
 	 * @param string $resource
 	 * @return void
 	 */
-	public function addResource(string $resource)
+	public function addResource(string ...$resource)
 	{
-		$this->resourceRegistry->save($resource);
+		foreach ($resource as $_resource)
+		{
+			$this->resourceRegistry->save($resource);
+		}
 	}
 
 	/**
@@ -221,7 +227,10 @@ class Acl implements AclInterface
 	 */
 	public function addPermission(string $permission)
 	{
-		$this->permissionRegistry->save($permission);
+		foreach ($permission as $_permission)
+		{
+			$this->permissionRegistry->save($_permission);
+		}
 	}
 
 	/**
@@ -234,29 +243,32 @@ class Acl implements AclInterface
 	 * @throws \Exception
 	 * @return void
 	 */
-	public function add(ObjectInterface $object)
+	public function add(ObjectInterface ...$objects)
 	{
-		if ($object instanceof RoleInterface)
+		foreach ($objects as $object)
 		{
-			$this->addRole((string)$object);
+			if ($object instanceof RoleInterface)
+			{
+				$this->addRole((string)$object);
+			}
+			else if ($object instanceof ResourceInterface)
+			{
+				$this->addResource((string)$object);
+			}
+			else if ($object instanceof PermissionInterface)
+			{
+				$this->addPermission((string)$object);
+			}
+			else {
+	            throw new \Exception(
+	                sprintf(
+	                    "%s must implement one of RoleInterface, '.
+	                    'ResourceInterface and PermissionInterface",
+	                    $object
+	                )
+	            );
+	        }	
 		}
-		else if ($object instanceof ResourceInterface)
-		{
-			$this->addResource((string)$object);
-		}
-		else if ($object instanceof PermissionInterface)
-		{
-			$this->addPermission((string)$object);
-		}
-		else {
-            throw new \Exception(
-                sprintf(
-                    "%s must implement one of RoleInterface, '.
-                    'ResourceInterface and PermissionInterface",
-                    $object
-                )
-            );
-        }
 	}
 
 	/**
