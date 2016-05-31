@@ -18,7 +18,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $newResource = new Resource('viewPatientHistory');
 
         $expected = 'viewPatientHistory';
-        $result = $newResource->getResourceName();
+        $result = $newResource->getName();
         $this->assertEquals($expected, $result);
     }
 

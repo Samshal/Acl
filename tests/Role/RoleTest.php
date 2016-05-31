@@ -18,7 +18,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $newRole = new Role('administrator');
 
         $expected = 'administrator';
-        $result = $newRole->getRoleName();
+        $result = $newRole->getName();
         $this->assertEquals($expected, $result);
     }
 
