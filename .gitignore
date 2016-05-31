@@ -3,7 +3,7 @@ vendor/
 *.phar
 
 composer.lock
-*.php
 doc/
 output/
 metrics/
+play/
