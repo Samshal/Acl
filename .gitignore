@@ -1,3 +1,6 @@
 vendor/
+
 *.phar
+
 composer.lock
+test.php
