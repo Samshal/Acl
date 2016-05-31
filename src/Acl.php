@@ -36,7 +36,7 @@ class Acl implements AclInterface
 	/**
 	 * @var RegistryInterface $roleRegistry
 	 */
-	protected $roleRegistry;
+	public $roleRegistry;
 
 	/**
 	 * @var RegistryInterface $resourceRegistry
@@ -54,9 +54,18 @@ class Acl implements AclInterface
 	public $globalRegistry;
 
 	/**
-	 * 
+	 *  @var array $sesion
 	 */
 	protected $session = [];
+
+	/**
+	 * @var SYN_ALLOW
+	 */
+	const SYN_ALLOW = "can";
+	/**
+	 * @var SYN_ALLOW
+	 */
+	const SYN_DENY = "cannot";
 
 	/**
 	 * Performs bootstrapping
@@ -85,6 +94,49 @@ class Acl implements AclInterface
 	{
 		$this->session["query"] = true;
 		unset($this->session["role"], $this->session["status"]);
+	}
+
+	/**
+	 * 
+	 */
+	public function __get($role)
+	{
+		if ($role === self::SYN_ALLOW || $role === self::SYN_DENY)
+		{
+			$this->session["status"] = ($role === self::SYN_ALLOW) ? true : false;
+
+			if (!empty($this->session["role"]))
+			{
+				$this->session["query"] = false;
+			}
+
+			return $this;
+		}
+
+		if (!$this->roleRegistry->exists($role)) throw new \Exception(sprintf("The role: %s doesnt exist", (string)$role));
+
+		$this->session["role"] = $role;
+
+		return $this;
+	}
+
+	/**
+	 * 
+	 */
+	public function __call($permission, $args)
+	{
+		if (!$this->permissionRegistry->exists($permission)) throw new \Exception(sprintf("The permission: %s doesnt exist", (string)$permission));
+		if (!$this->resourceRegistry->exists($args[0])) throw new \Exception(sprintf("The resource: %s doesnt exist", (string)$args[0]));
+
+		if ($this->session["query"])
+		{
+			$result = $this->getPermissionStatus($this->session["role"], $permission, $args[0]);
+			$this->initSession();
+			return $result;
+		}
+
+		$this->allow($this->session["role"], $permission, $args[0], $this->session["status"]);
+		$this->initSession();
 	}
 
 	/**
@@ -135,6 +187,9 @@ class Acl implements AclInterface
 		$this->permissionRegistry->save($permission);
 	}
 
+	/**
+	 * 
+	 */
 	public function add($object)
 	{
 		if (in_array(__NAMESPACE__."\\Role\\RoleInterface", class_implements($object)))
@@ -151,6 +206,9 @@ class Acl implements AclInterface
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public function allow($role, $permission, $resource, $status=true)
 	{
 		if (!$this->roleRegistry->exists($role)) throw new \Exception(sprintf("The role: %s doesnt exist", (string)$role));
@@ -160,52 +218,25 @@ class Acl implements AclInterface
 		$this->globalRegistry->save($role, $resource, $permission, $status);
 	}
 
+	/**
+	 * 
+	 */
 	public function deny($role, $permission, $resource)
 	{
 		$this->allow($role, $permission, $resource, false);
 	}
 
+	/**
+	 * 
+	 */
 	public function getPermissionStatus($role, $permission, $resource)
 	{
+		if (!$this->roleRegistry->exists($role)) throw new \Exception(sprintf("The role: %s doesnt exist", (string)$role));
+		if (!$this->permissionRegistry->exists($permission)) throw new \Exception(sprintf("The permission: %s doesnt exist", (string)$permission));
+		if (!$this->resourceRegistry->exists($resource)) throw new \Exception(sprintf("The resource: %s doesnt exist", (string)$resource));
+
 		$role = $this->globalRegistry->get($role);
 
 		return $role[$resource][$permission]["status"];
-	}
-
-	public function __get($role)
-	{
-		if ($role === "can" || $role === "cannot")
-		{
-			$this->session["status"] = ($role === "can") ? true : false;
-
-			if (!empty($this->session["role"]))
-			{
-				$this->session["query"] = false;
-			}
-
-			return $this;
-		}
-
-		if (!$this->roleRegistry->exists($role)) throw new \Exception(sprintf("The role: %s doesnt exist", (string)$role));
-
-		$this->session["role"] = $role;
-
-		return $this;
-	}
-
-	public function __call($permission, $args)
-	{
-		if (!$this->permissionRegistry->exists($permission)) throw new \Exception(sprintf("The permission: %s doesnt exist", (string)$permission));
-		if (!$this->resourceRegistry->exists($args[0])) throw new \Exception(sprintf("The resource: %s doesnt exist", (string)$args[0]));
-
-		if ($this->session["query"])
-		{
-			$result = $this->getPermissionStatus($this->session["role"], $permission, $args[0]);
-			$this->initSession();
-			return $result;
-		}
-
-		$this->allow($this->session["role"], $permission, $args[0], $this->session["status"]);
-		$this->initSession();
 	}
 }
