@@ -19,19 +19,5 @@ namespace Samshal\Acl\Resource;
  */
 interface ResourceInterface
 {
-    /**
-     * Constructor
-     *
-     * @param string $resourceName
-     */
-    public function __construct($resourceName);
-
-    /**
-     * Returns the name of a Resource object.
-     *
-     * @throws {@todo create exception for 'invalid Resource object supplied'}
-     *
-     * @return string
-     */
-    public function getResourceName();
+    
 }

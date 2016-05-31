@@ -19,17 +19,5 @@ namespace Samshal\Acl\Role;
  */
 interface RoleInterface
 {
-    /**
-     * @param string roleName
-     */
-    public function __construct($roleName);
-
-    /**
-     * Returns the name of a Role object.
-     *
-     * @throws {@todo create exception for 'invalid role object supplied'}
-     *
-     * @return string
-     */
-    public function getRoleName();
+    
 }

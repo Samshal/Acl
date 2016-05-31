@@ -22,26 +22,26 @@ interface AclInterface
     /**
      * Adds a new role object to the registry
      *
-     * @param RoleInterface|string $role
+     * @param string $role
      * @return void
      */
-    public function addRole($role);
+    public function addRole(string $role);
 
     /**
      * Adds a new resource object to the registry
      *
-     * @param ResourceInterface|string $resource
+     * @param string $resource
      * @return void
      */
-    public function addResource($resource);
+    public function addResource(string $resource);
 
     /**
      * Adds a new permission object to the registry
      *
-     * @param PermissionInterface|string $permission
+     * @param string $permission
      * @return void
      */
-    public function addPermission($permission);
+    public function addPermission(string $permission);
 
     /**
      * Adds objects lazily.
@@ -49,31 +49,31 @@ interface AclInterface
      * Automatically determine the type of an object and call the appropriate
      * add method on it.
      *
-     * @param RoleInterface|ResourceInterface|PermissionInterface $object
+     * @param ObjectInterface $object
      * @throws \Exception
      * @return void
      */
-    public function add($object);
+    public function add(ObjectInterface $object);
 
     /**
      * Change the status option of an assigned permission to true
      *
-     * @param RoleInterface|string $role;
-     * @param PermissionInterface|string $permission
-     * @param ResourceInterface|string $resource
+     * @param string $role;
+     * @param string $permission
+     * @param string $resource
      * @param boolean $status Optional
      * @throws \Exception
      * @return void
      */
-    public function allow($role, $permission, $resource, $status=true);
+    public function allow(string $role, string $permission, string $resource, bool $status=true);
 
     /**
      * Change the status option of an assigned permission to false
      *
-     * @param RoleInterface|string $role;
-     * @param PermissionInterface|string $permission
-     * @param ResourceInterface|string $resource
+     * @param string $role;
+     * @param string $permission
+     * @param string $resource
      * @return void
      */
-    public function deny($role, $permission, $resource);
+    public function deny(string $role, string $permission, string $resource);
 }

@@ -8,6 +8,8 @@
  */
 namespace Samshal\Acl\Resource;
 
+use Samshal\Acl\ObjectInterface;
+
 /**
  * Class DefaultResource.
  *
@@ -17,7 +19,7 @@ namespace Samshal\Acl\Resource;
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @since 30/05/2016
  */
-class DefaultResource implements ResourceInterface
+class DefaultResource implements ResourceInterface, ObjectInterface
 {
     /**
      * @var string
@@ -27,15 +29,15 @@ class DefaultResource implements ResourceInterface
     /**
      * {@inheritdoc}
      */
-    public function __construct($resourceName)
+    public function __construct(string $resourceName)
     {
-        $this->resourceName = (string) $resourceName;
+        $this->resourceName = $resourceName;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getResourceName()
+    public function getName() : string
     {
         return $this->resourceName;
     }
@@ -43,8 +45,8 @@ class DefaultResource implements ResourceInterface
     /**
      * Returns the ResourceName when this class is treated as a string.
      */
-    public function __toString()
+    public function __toString() : string
     {
-        return $this->getResourceName();
+        return $this->getName();
     }
 }

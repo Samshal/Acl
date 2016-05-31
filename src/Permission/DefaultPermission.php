@@ -8,6 +8,8 @@
  */
 namespace Samshal\Acl\Permission;
 
+use Samsha\Acl\ObjectInterface;
+
 /**
  * class DefaultPermission.
  *
@@ -15,7 +17,7 @@ namespace Samshal\Acl\Permission;
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @since 30/05/2016
  */
-class DefaultPermission implements PermissionInterface
+class DefaultPermission implements PermissionInterface, ObjectInterface
 {
     /**
      * @var string $permissionName
@@ -26,15 +28,15 @@ class DefaultPermission implements PermissionInterface
     /**
      * {@inheritdoc}
      */
-    public function __construct($permissionName)
+    public function __construct(string $permissionName)
     {
-        $this->permissionName = (string)$permissionName;
+        $this->permissionName = $permissionName;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPermissionName()
+    public function getName() : string
     {
         return $this->permissionName;
     }
@@ -42,8 +44,8 @@ class DefaultPermission implements PermissionInterface
     /**
      * Returns the permissionName when this class is treated as a string
      */
-    public function __toString()
+    public function __toString() : string
     {
-        return $this->getPermissionName();
+        return $this->getName();
     }
 }

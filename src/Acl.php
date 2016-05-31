@@ -22,9 +22,7 @@ use Samshal\Acl\Permission\{
 };
 use Samshal\Acl\Registry\{
 	GlobalRegistry,
-	RoleRegistry,
-	ResourceRegistry,
-	PermissionRegistry
+	Registry
 };
 
 
@@ -88,12 +86,10 @@ class Acl implements AclInterface
 	 */
 	protected function initRegistries()
 	{
-		$this->roleRegistry = new RoleRegistry();
-		$this->resourceRegistry = new ResourceRegistry();
-		$this->permissionRegistry = new PermissionRegistry();
+		$this->roleRegistry = new Registry();
+		$this->resourceRegistry = new Registry();
+		$this->permissionRegistry = new Registry();
 		$this->globalRegistry = new GlobalRegistry();
-
-		return; # <- obsolete
 	}
 
 	/**
@@ -105,18 +101,16 @@ class Acl implements AclInterface
 	{
 		$this->session["query"] = true;
 		unset($this->session["role"], $this->session["status"]);
-
-		return; # <- obsolete
 	}
 
 	/**
 	 * Listen for and intercept properties that're not set
 	 *
-	 * @param string|RoleInterface $role;
+	 * @param string $role;
 	 * @throws \Exception
 	 * @return AclInterface
 	 */
-	public function __get($role)
+	public function __get(string $role) : AclInterface
 	{
 		if ($role === self::SYN_ALLOW || $role === self::SYN_DENY)
 		{
@@ -149,12 +143,12 @@ class Acl implements AclInterface
 	/**
 	 * Listen for and intercept undefined methods
 	 *
-	 * @param string|PermissionInterface $permission
-	 * @param string[]|ResourceInterface[] $args
+	 * @param string $permission
+	 * @param string[] $args
 	 * @throws \Exception
 	 * @return void
 	 */
-	public function __call($permission, $args)
+	public function __call(string $permission, array $args)
 	{
 		if (!$this->permissionRegistry->exists($permission)) {
             throw new \Exception(
@@ -195,62 +189,39 @@ class Acl implements AclInterface
         );
 
 		$this->initSession();
-
-		return; # <- obsolete
 	}
 
 	/**
 	 * Add a new role object to the registry
 	 *
-	 * @param RoleInterface|string $role
+	 * @param string $role
 	 * @return void
 	 */
-	public function addRole($role)
+	public function addRole(string $role)
 	{
-		if ($role instanceof RoleInterface)
-		{
-			$role = (string)$role;
-		}
-
 		$this->roleRegistry->save($role);
-
-		return; # <- obsolete
 	}
 
 	/**
 	 * Add a new resource object to the registry
 	 *
-	 * @param ResourceInterface|string $resource
+	 * @param string $resource
 	 * @return void
 	 */
-	public function addResource($resource)
+	public function addResource(string $resource)
 	{
-		if ($resource instanceof ResourceInterface)
-		{
-			$resource = (string)$resource;
-		}
-
 		$this->resourceRegistry->save($resource);
-
-		return; # <- obsolete
 	}
 
 	/**
 	 * Add a new permission object to the registry
 	 *
-	 * @param PermissionInterface|string $permission
+	 * @param PermissionInterface $permission
 	 * @return void
 	 */
-	public function addPermission($permission)
+	public function addPermission(string $permission)
 	{
-		if ($permission instanceof PermissionInterface)
-		{
-			$permission = (string)$permission;
-		}
-
 		$this->permissionRegistry->save($permission);
-
-		return; # <- obsolete
 	}
 
 	/**
@@ -259,23 +230,23 @@ class Acl implements AclInterface
 	 * Automatically determine the type of an object and call the appropriate
 	 * add method on it.
 	 *
-	 * @param RoleInterface|ResourceInterface|PermissionInterface $object
+	 * @param ObjectInterface $object
 	 * @throws \Exception
 	 * @return void
 	 */
-	public function add($object)
+	public function add(ObjectInterface $object)
 	{
 		if ($object instanceof RoleInterface)
 		{
-			$this->addRole($object);
+			$this->addRole((string)$object);
 		}
 		else if ($object instanceof ResourceInterface)
 		{
-			$this->addResource($object);
+			$this->addResource((string)$object);
 		}
 		else if ($object instanceof PermissionInterface)
 		{
-			$this->addPermission($object);
+			$this->addPermission((string)$object);
 		}
 		else {
             throw new \Exception(
@@ -286,21 +257,20 @@ class Acl implements AclInterface
                 )
             );
         }
-
-		return; # <- obsolete
 	}
 
 	/**
 	 * Change the status option of an assigned permission to true
 	 *
-	 * @param RoleInterface|string $role;
-	 * @param PermissionInterface|string $permission
-	 * @param ResourceInterface|string $resource
+
+	 * @param string $role;
+	 * @param string $permission
+	 * @param string $resource
 	 * @param boolean $status Optional
 	 * @throws \Exception
 	 * @return void
 	 */
-	public function allow($role, $permission, $resource, $status = true)
+	public function allow(string $role, string $permission, string $resource, bool $status=true)
 	{
 		if (!$this->roleRegistry->exists($role)) {
             throw new \Exception(
@@ -330,34 +300,30 @@ class Acl implements AclInterface
         }
 
 		$this->globalRegistry->save($role, $resource, $permission, $status);
-
-		return; # <- obsolete
 	}
 
 	/**
 	 * Change the status option of an assigned permission to false
 	 *
-	 * @param RoleInterface|string $role;
-	 * @param PermissionInterface|string $permission
-	 * @param ResourceInterface|string $resource
+	 * @param string $role;
+	 * @param string $permission
+	 * @param string $resource
 	 * @return void
 	 */
-	public function deny($role, $permission, $resource)
+	public function deny(string $role, string $permission, string $resource)
 	{
 		$this->allow($role, $permission, $resource, false);
-
-		return; # <- obsolete
 	}
 
 	/**
 	 * Retrieve the status of a permission assigned to a role
 	 *
-	 * @param RoleInterface|string $role;
-	 * @param PermissionInterface|string $permission
-	 * @param ResourceInterface|string $resource
+	 * @param string $role;
+	 * @param string $permission
+	 * @param string $resource
 	 * @return boolean
 	 */
-	public function getPermissionStatus($role, $permission, $resource)
+	public function getPermissionStatus(string $role, string $permission, string $resource) : bool
 	{
 		if (!$this->roleRegistry->exists($role)) {
             throw new \Exception(

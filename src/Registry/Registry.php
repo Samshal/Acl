@@ -15,7 +15,7 @@ namespace Samshal\Acl\Registry;
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @since 30/05/2016
  */
-abstract class Registry implements RegistryInterface
+class Registry implements RegistryInterface
 {
     /**
      * @var array $registry
@@ -29,7 +29,7 @@ abstract class Registry implements RegistryInterface
      * @param variadic $options
      * @return void
      */
-    public function save($object, ...$options)
+    public function save(string $object, ...$options)
     {
         if (!$this->exists($object)) {
             $this->registry[$object] = [];
@@ -44,7 +44,7 @@ abstract class Registry implements RegistryInterface
      * @param string $object
      * @return void
      */
-    public function remove($object)
+    public function remove(string $object) : bool
     {
         if ($this->exists($object)) {
             unset($this->registry[$object]);
@@ -59,7 +59,7 @@ abstract class Registry implements RegistryInterface
      * @param string $object
      * @return boolean
      */
-    public function exists($object)
+    public function exists(string $object) : bool
     {
         return (!empty($this->registry) && isset($this->registry[$object]));
     }
@@ -70,7 +70,7 @@ abstract class Registry implements RegistryInterface
      * @param string $object
      * @return mixed
      */
-    public function get($object)
+    public function get(string $object)
     {
         return ($this->exists($object)) ? $this->registry[$object] : null;
     }

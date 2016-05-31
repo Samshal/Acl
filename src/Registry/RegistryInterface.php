@@ -24,7 +24,7 @@ interface RegistryInterface
      * @param string $object
      * @return void
      */
-    public function save($object, ...$options);
+    public function save(string $object, ...$options);
 
     /**
      * remves an object from the global registry
@@ -32,7 +32,7 @@ interface RegistryInterface
      * @param string $object
      * @return void
      */
-    public function remove($object);
+    public function remove(string $object) : bool;
 
     /**
      * determines if an object exists in the global registry
@@ -40,7 +40,7 @@ interface RegistryInterface
      * @param string $object
      * @return boolean
      */
-    public function exists($object);
+    public function exists(string $object) : bool;
 
     /**
      * retrieves an object index from the registry
@@ -48,5 +48,5 @@ interface RegistryInterface
      * @param string $object
      * @return mixed
      */
-    public function get($object);
+    public function get(string $object);
 }

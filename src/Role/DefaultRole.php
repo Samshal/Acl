@@ -8,6 +8,7 @@
  */
 namespace Samshal\Acl\Role;
 
+use Samshal\Acl\ObjectInterface;
 /**
  * class DefaultRole.
  *
@@ -17,7 +18,7 @@ namespace Samshal\Acl\Role;
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
  * @since 30/05/2016
  */
-class DefaultRole implements RoleInterface
+class DefaultRole implements RoleInterface, ObjectInterface
 {
     /**
      * @var string
@@ -27,15 +28,15 @@ class DefaultRole implements RoleInterface
     /**
      * {@inheritdoc}
      */
-    public function __construct($roleName)
+    public function __construct(string $roleName)
     {
-        $this->roleName = (string) $roleName;
+        $this->roleName = $roleName;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRoleName()
+    public function getName() : string
     {
         return $this->roleName;
     }
@@ -43,8 +44,8 @@ class DefaultRole implements RoleInterface
     /**
      * Returns the roleName when this class is treated as a string.
      */
-    public function __toString()
+    public function __toString() : string
     {
-        return $this->getRoleName();
+        return $this->getName();
     }
 }

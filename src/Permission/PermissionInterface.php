@@ -19,17 +19,5 @@ namespace Samshal\Acl\Permission;
  */
 interface PermissionInterface
 {
-    /**
-     * Constructor
-     * @param string permissionName
-     */
-    public function __construct($permissionName);
-
-    /**
-     * Returns the name of a Permission object
-     *
-     * @throws {@todo create exception for 'invalid permission object supplied'}
-     * @return string
-     */
-    public function getPermissionName();
+    
 }
