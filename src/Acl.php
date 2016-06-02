@@ -114,9 +114,7 @@ class Acl implements AclInterface
 	{
 		if ($role === self::SYN_ALLOW || $role === self::SYN_DENY)
 		{
-			$this->session["status"] = ($role === self::SYN_ALLOW)
-                ? true : false # <- obsolete, conditions do escalate to a boolean
-            ;
+			$this->session["status"] = ($role === self::SYN_ALLOW);
 
 			if (!empty($this->session["role"]))
 			{
@@ -185,7 +183,7 @@ class Acl implements AclInterface
             $this->session["role"],
             $permission,
             $args[0],
-            $this->session["status"]
+            (boolean)$this->session["status"]
         );
 
 		$this->initSession();
@@ -281,7 +279,7 @@ class Acl implements AclInterface
 	 * @throws \Exception
 	 * @return void
 	 */
-	public function allow(string $role, string $permission, string $resource, bool $status=true)
+	public function allow(string $role, string $permission, string $resource, boolean $status=true)
 	{
 		if (!$this->roleRegistry->exists($role)) {
             throw new \Exception(
