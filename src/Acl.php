@@ -36,22 +36,22 @@ use Samshal\Acl\Registry\{
 class Acl implements AclInterface
 {
 	/**
-	 * @var RegistryInterface $roleRegistry
+	 * @var Registry\RegistryInterface $roleRegistry
 	 */
 	public $roleRegistry;
 
 	/**
-	 * @var RegistryInterface $resourceRegistry
+	 * @var Registry\RegistryInterface $resourceRegistry
 	 */
 	protected $resourceRegistry;
 
 	/**
-	 * @var RegistryInterface $permissionRegistry
+	 * @var Registry\RegistryInterface $permissionRegistry
 	 */
 	protected $permissionRegistry;
 
 	/**
-	 * @var RegistryInterface $globalRegistry
+	 * @var Registry\RegistryInterface $globalRegistry
 	 */
 	public $globalRegistry;
 

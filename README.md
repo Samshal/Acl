@@ -21,7 +21,7 @@ This component is an implementation of an ACL, it makes it easy for you to get u
 This software is distributed under the [MIT](https://opensource.org/licenses/MIT) license. Please read LICENSE for information on the software availability and distribution.
 
 ## Installation
-Samshal\Acl is available via [Composer/Packagist](https://packagist.org/packages/samshal/scripd), so just add this line to your `composer.json` file:
+Samshal\Acl is available via [Composer/Packagist](https://packagist.org/packages/samshal/acl), so just add this line to your `composer.json` file:
 ```json
 	{
 		"require":{
