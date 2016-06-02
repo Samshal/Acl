@@ -1,4 +1,4 @@
-# Acl [![Build Status](https://travis-ci.org/Samshal/Acl.svg?branch=master)](https://travis-ci.org/Samshal/Acl)
+# Acl [![Build Status](https://travis-ci.org/Samshal/Acl.svg?branch=master)](https://travis-ci.org/Samshal/Acl) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Samshal/Acl/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Samshal/Acl/?branch=master)
 
 Samshal\Acl adds a role based permission system for user authentication. In general, it provides a lightweight access control list for privileges and permission management.
 
