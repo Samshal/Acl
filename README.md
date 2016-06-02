@@ -4,7 +4,7 @@ Samshal\Acl adds a role based permission system for user authentication. In gene
 
 ### Why you might need it
 
-Access Control Lists allow an application to control access to its areas, they provide a flexible interface for creating Permissions, Roles, Resources and assigning the created permissions on roles based restricting/granting access to resources.
+Access Control Lists allow an application to control access to its areas, they provide a flexible interface for creating Permissions, Roles, Resources and assigning the created permissions on roles.
 
 This component is an implementation of an ACL, it makes it easy for you to get up and running with user authorization.
 
