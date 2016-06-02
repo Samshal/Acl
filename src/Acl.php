@@ -220,7 +220,7 @@ class Acl implements AclInterface
 	/**
 	 * Add a new permission object to the registry
 	 *
-	 * @param PermissionInterface $permission
+	 * @param string $permission
 	 * @return void
 	 */
 	public function addPermission(string $permission)
@@ -237,7 +237,7 @@ class Acl implements AclInterface
 	 * Automatically determine the type of an object and call the appropriate
 	 * add method on it.
 	 *
-	 * @param ObjectInterface $object
+	 * @param ObjectInterface $objects
 	 * @throws \Exception
 	 * @return void
 	 */
