@@ -19,7 +19,7 @@ This component is an implementation of an ACL, it makes it easy for you to get u
 
 ### Metrics of master branch
 
-![Package Metrics](https://raw.githubusercontent.com/Samshal/Acl/master/phpmetric-maintainability.svg)
+![Package Metrics](https://raw.githubusercontent.com/Samshal/Acl/master/phpmetric_maintainability.png)
 
 ### License
 This software is distributed under the [MIT](https://opensource.org/licenses/MIT) license. Please read LICENSE for information on the software availability and distribution.
