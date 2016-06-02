@@ -9,20 +9,20 @@
 namespace Samshal\Acl;
 
 use Samshal\Acl\Role\{
-	DefaultRole as Role,
-	RoleInterface
+    DefaultRole as Role,
+    RoleInterface
 };
 use Samshal\Acl\Resource\{
-	DefaultResource as Resource,
-	ResourceInterface
+    DefaultResource as Resource,
+    ResourceInterface
 };
 use Samshal\Acl\Permission\{
-	DefaultPermission as Permission,
-	PermissionInterface
+    DefaultPermission as Permission,
+    PermissionInterface
 };
 use Samshal\Acl\Registry\{
-	GlobalRegistry,
-	Registry
+    GlobalRegistry,
+    Registry
 };
 
 
@@ -35,96 +35,96 @@ use Samshal\Acl\Registry\{
  */
 class Acl implements AclInterface
 {
-	/**
-	 * @var Samshal\Acl\Registry\RegistryInterface $roleRegistry
-	 */
-	public $roleRegistry;
+    /**
+     * @var Samshal\Acl\Registry\RegistryInterface $roleRegistry
+     */
+    public $roleRegistry;
 
-	/**
-	 * @var Samshal\Acl\Registry\RegistryInterface $resourceRegistry
-	 */
-	protected $resourceRegistry;
+    /**
+     * @var Samshal\Acl\Registry\RegistryInterface $resourceRegistry
+     */
+    protected $resourceRegistry;
 
-	/**
-	 * @var Samshal\Acl\Registry\RegistryInterface $permissionRegistry
-	 */
-	protected $permissionRegistry;
+    /**
+     * @var Samshal\Acl\Registry\RegistryInterface $permissionRegistry
+     */
+    protected $permissionRegistry;
 
-	/**
-	 * @var Samshal\Acl\Registry\RegistryInterface $globalRegistry
-	 */
-	public $globalRegistry;
+    /**
+     * @var Samshal\Acl\Registry\RegistryInterface $globalRegistry
+     */
+    public $globalRegistry;
 
-	/**
-	 *  @var string[] $sesion
-	 */
-	protected $session = [];
+    /**
+     *  @var string[] $sesion
+     */
+    protected $session = [];
 
-	/**
-	 * @var string SYN_ALLOW
-	 */
-	const SYN_ALLOW = "can";
+    /**
+     * @var string SYN_ALLOW
+     */
+    const SYN_ALLOW = "can";
 
-	/**
-	 * @var string SYN_DENY
-	 */
-	const SYN_DENY = "cannot";
+    /**
+     * @var string SYN_DENY
+     */
+    const SYN_DENY = "cannot";
 
-	/**
-	 * Performs bootstrapping
-	 */
-	public function __construct()
-	{
-		self::initRegistries();
-		self::initSession();
-	}
+    /**
+     * Performs bootstrapping
+     */
+    public function __construct()
+    {
+        self::initRegistries();
+        self::initSession();
+    }
 
-	/**
-	 * Initalizes the registries
-	 *
-	 * @return void
-	 */
-	protected function initRegistries()
-	{
-		$this->roleRegistry = new Registry();
-		$this->resourceRegistry = new Registry();
-		$this->permissionRegistry = new Registry();
-		$this->globalRegistry = new GlobalRegistry();
-	}
+    /**
+     * Initalizes the registries
+     *
+     * @return void
+     */
+    protected function initRegistries()
+    {
+        $this->roleRegistry = new Registry();
+        $this->resourceRegistry = new Registry();
+        $this->permissionRegistry = new Registry();
+        $this->globalRegistry = new GlobalRegistry();
+    }
 
-	/**
-	 * Initializes the global session array and sets them to the default value
-	 *
-	 * @return void
-	 */
-	protected function initSession()
-	{
-		$this->session["query"] = true;
-		unset($this->session["role"], $this->session["status"]);
-	}
+    /**
+     * Initializes the global session array and sets them to the default value
+     *
+     * @return void
+     */
+    protected function initSession()
+    {
+        $this->session["query"] = true;
+        unset($this->session["role"], $this->session["status"]);
+    }
 
-	/**
-	 * Listen for and intercept properties that're not set
-	 *
-	 * @param string $role;
-	 * @throws \Exception
-	 * @return AclInterface
-	 */
-	public function __get(string $role) : AclInterface
-	{
-		if ($role === self::SYN_ALLOW || $role === self::SYN_DENY)
-		{
-			$this->session["status"] = ($role === self::SYN_ALLOW);
+    /**
+     * Listen for and intercept properties that're not set
+     *
+     * @param string $role;
+     * @throws \Exception
+     * @return AclInterface
+     */
+    public function __get(string $role) : AclInterface
+    {
+        if ($role === self::SYN_ALLOW || $role === self::SYN_DENY)
+        {
+            $this->session["status"] = ($role === self::SYN_ALLOW);
 
-			if (!empty($this->session["role"]))
-			{
-				$this->session["query"] = false;
-			}
+            if (!empty($this->session["role"]))
+            {
+                $this->session["query"] = false;
+            }
 
-			return $this;
-		}
+            return $this;
+        }
 
-		if (!$this->roleRegistry->exists($role)) {
+        if (!$this->roleRegistry->exists($role)) {
             throw new \Exception(
                 sprintf(
                     "The role: %s doesnt exist",
@@ -144,7 +144,7 @@ class Acl implements AclInterface
 	 * @param string $permission
 	 * @param string[] $args
 	 * @throws \Exception
-	 * @return void
+	 * @return boolean|null
 	 */
 	public function __call(string $permission, array $args)
 	{
@@ -157,7 +157,7 @@ class Acl implements AclInterface
             );
         }
 
-		if (!$this->resourceRegistry->exists($args[0])) {
+        if (!$this->resourceRegistry->exists($args[0])) {
             throw new \Exception(
                 sprintf(
                     "The resource: %s doesnt exist",
@@ -192,7 +192,7 @@ class Acl implements AclInterface
 	/**
 	 * Add a new role object to the registry
 	 *
-	 * @param string $role
+	 * @param string[] $role
 	 * @return void
 	 */
 	public function addRole(string ...$role)
@@ -206,7 +206,7 @@ class Acl implements AclInterface
 	/**
 	 * Add a new resource object to the registry
 	 *
-	 * @param string $resource
+	 * @param string[] $resource
 	 * @return void
 	 */
 	public function addResource(string ...$resource)
@@ -237,7 +237,7 @@ class Acl implements AclInterface
 	 * Automatically determine the type of an object and call the appropriate
 	 * add method on it.
 	 *
-	 * @param ObjectInterface $objects
+	 * @param ObjectInterface[] $objects
 	 * @throws \Exception
 	 * @return void
 	 */
@@ -290,7 +290,7 @@ class Acl implements AclInterface
             );
         }
 
-		if (!$this->permissionRegistry->exists($permission)) {
+        if (!$this->permissionRegistry->exists($permission)) {
             throw new \Exception(
                 sprintf(
                     "The permission: %s doesnt exist",
@@ -299,7 +299,7 @@ class Acl implements AclInterface
             );
         }
 
-		if (!$this->resourceRegistry->exists($resource)) {
+        if (!$this->resourceRegistry->exists($resource)) {
             throw new \Exception(
                 sprintf(
                     "The resource: %s doesnt exist",
@@ -308,33 +308,33 @@ class Acl implements AclInterface
             );
         }
 
-		$this->globalRegistry->save($role, $resource, $permission, $status);
-	}
+        $this->globalRegistry->save($role, $resource, $permission, $status);
+    }
 
-	/**
-	 * Change the status option of an assigned permission to false
-	 *
-	 * @param string $role;
-	 * @param string $permission
-	 * @param string $resource
-	 * @return void
-	 */
-	public function deny(string $role, string $permission, string $resource)
-	{
-		$this->allow($role, $permission, $resource, false);
-	}
+    /**
+     * Change the status option of an assigned permission to false
+     *
+     * @param string $role;
+     * @param string $permission
+     * @param string $resource
+     * @return void
+     */
+    public function deny(string $role, string $permission, string $resource)
+    {
+        $this->allow($role, $permission, $resource, false);
+    }
 
-	/**
-	 * Retrieve the status of a permission assigned to a role
-	 *
-	 * @param string $role;
-	 * @param string $permission
-	 * @param string $resource
-	 * @return boolean
-	 */
-	public function getPermissionStatus(string $role, string $permission, string $resource) : bool
-	{
-		if (!$this->roleRegistry->exists($role)) {
+    /**
+     * Retrieve the status of a permission assigned to a role
+     *
+     * @param string $role;
+     * @param string $permission
+     * @param string $resource
+     * @return boolean
+     */
+    public function getPermissionStatus(string $role, string $permission, string $resource) : bool
+    {
+        if (!$this->roleRegistry->exists($role)) {
             throw new \Exception(
                 sprintf(
                     "The role: %s doesnt exist",
@@ -343,7 +343,7 @@ class Acl implements AclInterface
             );
         }
 
-		if (!$this->permissionRegistry->exists($permission)) {
+        if (!$this->permissionRegistry->exists($permission)) {
             throw new \Exception(
                 sprintf(
                     "The permission: %s doesnt exist",
@@ -352,7 +352,7 @@ class Acl implements AclInterface
             );
         }
 
-		if (!$this->resourceRegistry->exists($resource)) {
+        if (!$this->resourceRegistry->exists($resource)) {
             throw new \Exception(
                 sprintf(
                     "The resource: %s doesnt exist",
@@ -362,8 +362,8 @@ class Acl implements AclInterface
         }
 
 
-		$role = $this->globalRegistry->get($role);
+        $role = $this->globalRegistry->get($role);
 
-		return $role[$resource][$permission]["status"];
-	}
+        return $role[$resource][$permission]["status"];
+    }
 }
