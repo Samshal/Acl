@@ -5,5 +5,4 @@ vendor/
 composer.lock
 doc/
 output/
-metrics/
 play/
