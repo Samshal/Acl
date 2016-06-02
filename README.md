@@ -9,12 +9,11 @@ Access Control Lists allow an application to control access to its areas, they p
 This component is an implementation of an ACL, it makes it easy for you to get up and running with user authorization.
 
 ## Class Features
-
-	- Creation of Resources, Roles and Permissions
-	- Ability to set Permissions on Resources and granting these Permissions to Roles.
-	- Fully Serializable, can work interoperably with any source of data.
-	- Compatible with PHP v7.0+
-	- Easy to use
+- Creation of Resources, Roles and Permissions
+- Ability to set Permissions on Resources and granting these Permissions to Roles.
+- Fully Serializable, can work interoperably with any source of data.
+- Compatible with PHP v7.0+
+- Easy to use
 
 **Resources** are objects which acts in accordance to the permissions defined on them by the ACLs. **Roles** are objects that requests access to resources and can be allowed or denied by the ACL layers. **Permissions** are just rules defined on Resources. 
 

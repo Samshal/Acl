@@ -19,5 +19,4 @@ namespace Samshal\Acl\Resource;
  */
 interface ResourceInterface
 {
-    
 }

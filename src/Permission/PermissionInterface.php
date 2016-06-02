@@ -19,5 +19,4 @@ namespace Samshal\Acl\Permission;
  */
 interface PermissionInterface
 {
-    
 }

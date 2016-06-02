@@ -19,5 +19,4 @@ namespace Samshal\Acl\Role;
  */
 interface RoleInterface
 {
-    
 }
