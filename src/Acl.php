@@ -274,7 +274,6 @@ class Acl implements AclInterface
 	/**
 	 * Change the status option of an assigned permission to true
 	 *
-
 	 * @param string $role;
 	 * @param string $permission
 	 * @param string $resource

@@ -1,7 +1,36 @@
 # Acl [![Build Status](https://travis-ci.org/Samshal/Acl.svg?branch=master)](https://travis-ci.org/Samshal/Acl)
 
-This component adds a role based permission system for user authentication. In general, it provides a lightweight access control list for privileges and permission management.
+Samshal\Acl adds a role based permission system for user authentication. In general, it provides a lightweight access control list for privileges and permission management.
 
-It provides a flexible interface for creating Permissions, Roles, Resources and assigning the created permissions on roles.
+## Why you might need it
 
-This [gist](https://gist.github.com/Samshal/06dd964a0984b06c550476fb75edca1c) contains an instantiation example of the library and gives an idea of how the component works.
+Access Control Lists allow an application to control access to its areas, they provide a flexible interface for creating Permissions, Roles, Resources and assigning the created permissions on roles based restricting/granting access to resources.
+
+This component is an implementation of an ACL, it makes it easy for you to get up and running with user authorization.
+
+## Class Features
+
+	- Creation of Resources, Roles and Permissions
+	- Ability to set Permissions on Resources and granting these Permissions to Roles.
+	- Fully Serializable, can work interoperably with any source of data.
+	- Compatible with PHP v7.0+
+	- Easy to use
+
+**Resources** are objects which acts in accordance to the permissions defined on them by the ACLs. **Roles** are objects that requests access to resources and can be allowed or denied by the ACL layers. **Permissions** are just rules defined on Resources. 
+
+## License
+This software is distributed under the [MIT](https://opensource.org/licenses/MIT) license. Please read LICENSE for information on the software availability and distribution.
+
+## Installation
+Samshal\Acl is available via [Composer/Packagist](https://packagist.org/packages/samshal/scripd), so just add this line to your `composer.json` file:
+```json
+	{
+		"require":{
+			"samshal/scripd":"^1.0"
+		}
+	}
+```
+or
+```shell
+	composer require samshal/acl
+```
