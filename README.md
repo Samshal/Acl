@@ -54,3 +54,4 @@ Creating an ACL component is as easy as instantiating `Samshal\Acl`. The constru
 	$acl = new Acl();
 ```
 
+#### Adding objects (**Roles**, **Permission** and **Resources**) to the ACL.

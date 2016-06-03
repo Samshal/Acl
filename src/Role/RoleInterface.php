@@ -19,4 +19,10 @@ namespace Samshal\Acl\Role;
  */
 interface RoleInterface
 {
+	/**
+	 * Returns the descriptionof a role object
+	 *
+	 * @return string
+	 */
+	public function getDescription() : string;
 }

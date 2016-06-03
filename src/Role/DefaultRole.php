@@ -27,11 +27,17 @@ class DefaultRole implements RoleInterface, ObjectInterface
     protected $roleName;
 
     /**
+     * @var string
+     */
+    protected $roleDescription;
+
+    /**
      * {@inheritdoc}
      */
-    public function __construct(string $roleName)
+    public function __construct(string $roleName, string $roleDescription="")
     {
         $this->roleName = $roleName;
+        $this->roleDescription = $roleDescription;
     }
 
     /**
@@ -40,6 +46,14 @@ class DefaultRole implements RoleInterface, ObjectInterface
     public function getName() : string
     {
         return $this->roleName;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDescription() : string
+    {
+        return $this->roleDescription;
     }
 
     /**
