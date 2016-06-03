@@ -29,7 +29,7 @@ Samshal\Acl is available via [Composer/Packagist](https://packagist.org/packages
 ```json
 	{
 		"require":{
-			"samshal/scripd":"^1.0"
+			"samshal/acl":"^1.0"
 		}
 	}
 ```
@@ -48,7 +48,7 @@ Creating an ACL component is as easy as instantiating `Samshal\Acl`. The constru
 	use Samshal\Acl;
 	use Samshal\Acl\{
 		Role\DefaultRole as Role,
-		Resource\DefaultResource as Role,
+		Resource\DefaultResource as Resource,
 		Permission\DefaultPermission as Permission
 	};
 
