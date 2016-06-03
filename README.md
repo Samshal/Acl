@@ -150,7 +150,7 @@ To check the permission a role has on a certain resource, you can use a snippet 
 	...
 
 	$booleanResultIndicatingPermission = $acl->can->admin->view('patientFinancialHistory');
-	//We are asking a very simple question can an Admin role View the patientFinanicialHistory resource?
+	//We are asking a very simple question: can an Admin role View the patientFinanicialHistory resource?
 
 	//even better, we could use it in a conditional
 
@@ -160,7 +160,49 @@ To check the permission a role has on a certain resource, you can use a snippet 
 	}
 	else
 	{
-		//this user do not have any permission to delete this resource, let him know that
+		//this user does not have any permission to delete this resource, let him know that
+	}
+
+	...
+```
+
+#### Keeping your ACL persistent and safe.
+`\Samshal\Acl` stores objects including the permissions on objects in registries which are fully serializable. This means you can convert your entire acl into a string and store that in a database or session and make it exist infinitely until you are ready to destroy it or __never use it again__.
+
+###### How-To
+
+```php
+	...
+
+	$serializedAcl = serialize($acl);
+
+	//store $serializedAcl in a session
+	session_start();
+	$_SESSION["acl"] = $serializedAcl.
+
+	//or in a db
+	$sqlQuery = "INSERT INTO my_tbl VALUES ('$serializedAcl')";
+```
+
+##### How to retrieve it
+
+```php
+	...
+	/**
+	 * File Name: patientHistories.php
+	 */
+
+	 session_start();
+	 $acl = unserialize($_SESSION["acl"]);
+
+	 //use it!
+	if ($acl->can->accountant->delete('patientFinanicalHistory'))
+	{
+		//delete the patients financial history!
+	}
+	else
+	{
+		//this user does not have any permission to delete this resource, let him know that
 	}
 
 	...
