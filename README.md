@@ -56,7 +56,7 @@ Creating an ACL component is as easy as instantiating `Samshal\Acl`. The constru
 ```
 
 #### Adding objects (**Roles**, **Permissions** and **Resources**) to the ACL.
-The ACL provides an `add` method for adding new objects generically. In other words, to add a new role to the Acl, just pass in a `Role Object` to the ACL`s `add` method. You can also do the same for Roles and Permissions.
+The ACL provides an `add` method for adding new objects generically. In other words, to add a new role to the Acl, just pass in a `Role Object` to the ACL`s `add` method. You can also do the same for Resources and Permissions.
 
 A Role Object is an instance of the `\Samshal\Acl\Role\DefaultRole` object or more generally, an object that implements the `\Samshal\Acl\Role\RoleInterface` and `\Samshal\Acl\ObjectInterface` contracts. It accepts the name of the Role to create as parameter and the description for the created role as optional second parameter.
 
