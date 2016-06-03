@@ -84,7 +84,7 @@ Generally, Roles, Resources and Permissions are referred to as Objects. They mus
 
 	...
 ```
-Internally, the created objects are stored in Registries which are fully serializable. This makes it easy to transfer/get the objects from anywhere; a persistent storage, a database and anywhere data can be stored/received. More on this later.
+Internally, the created objects are stored in Registries which are fully serializable. This makes it easy to transfer/get the objects from anywhere; a persistent storage, a database and anywhere else data can be stored/received. More on this later.
 
 Samshal\Acl provides a more intuitive way to create objects. Instead of creating new objects everytime you need to add them to the registry, why not call a single method that can determine which kind of object you are trying to create and have it do it automatically? The ACL provides an `addRole`, `addResource` and `addPermission` methods for this purpose which all accepts string values as parameters.
 Example:
@@ -120,6 +120,48 @@ or this for the Permissions.
 	...
 
 	$acl->addPermission('edit', 'view', 'create', 'print', 'delete'); //you can add even more permissions!
+
+	...
+```
+
+#### Setting Permissions.
+The reason why this component exists is to set permissions on resources and grant/deny these permissions to roles. The snippet below gives an example of how to set these permissions.
+
+```php
+	...
+
+	/**
+	 * In the example below, admin is the name of a Role that's been added to the ACl using add() or addRole().
+	 * Similarly view is a permission and patientFinancialHistory is a resource.
+	 *
+	 * Use the `can` keyword in between a role and a permission in a chain to set make the resource in question accessible or not to the role.
+	 */
+	$acl->admin->can->view('patientFinancialHistory');
+
+	$acl->accountant->cannot->delete('patientFinancialHistory'); //denying the role Accountant delete right on the PatienFinancialHistory resource.
+
+	...
+```
+
+#### Checking Permissions
+To check the permission a role has on a certain resource, you can use a snippet similar to the following:
+
+```php
+	...
+
+	$booleanResultIndicatingPermission = $acl->can->admin->view('patientFinancialHistory');
+	//We are asking a very simple question can an Admin role View the patientFinanicialHistory resource?
+
+	//even better, we could use it in a conditional
+
+	if ($acl->can->accountant->delete('patientFinanicalHistory'))
+	{
+		//delete the patients financial history!
+	}
+	else
+	{
+		//this user do not have any permission to delete this resource, let him know that
+	}
 
 	...
 ```
