@@ -187,15 +187,14 @@ To check the permission a role has on a certain resource, you can use a snippet 
 ##### How to retrieve it
 
 ```php
-	...
 	/**
 	 * File Name: patientHistories.php
 	 */
 
-	 session_start();
-	 $acl = unserialize($_SESSION["acl"]);
+	session_start();
+	$acl = unserialize($_SESSION["acl"]);
 
-	 //use it!
+	//use it!
 	if ($acl->can->accountant->delete('patientFinanicalHistory'))
 	{
 		//delete the patients financial history!
@@ -207,3 +206,14 @@ To check the permission a role has on a certain resource, you can use a snippet 
 
 	...
 ```
+
+## Maintainer of this Library
+This library is currently developed and maintained by [Samuel Adeshina](http://samshal.github.io)
+
+## ROAD MAP
+The next release will include most of the features and fixes detailed in this [issue](https://github.com/Samshal/Acl/issues) especially [this](https://github.com/Samshal/Acl/issues/3)
+
+## HOW TO CONTRIBUTE
+Support follows PSR-2 PHP coding standards.
+
+Please report any issue you find in the issues page. Pull requests are welcome.
