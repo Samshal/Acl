@@ -41,16 +41,16 @@ or
 ### Getting Started: Creating an ACL
 Creating an ACL component is as easy as instantiating `Samshal\Acl`. The constructor __currently__ accepts no arguments. An example of instantiation is:
 ```php
-	<?php
-		require "vendor/autoload.php";
+<?php
+	require "vendor/autoload.php";
 
-		use Samshal\Acl;
-		use Samshal\Acl\{
-			Role\DefaultRole as Role,
-			Resource\DefaultResource as Role,
-			Permission\DefaultPermission as Permission
-		};
+	use Samshal\Acl;
+	use Samshal\Acl\{
+		Role\DefaultRole as Role,
+		Resource\DefaultResource as Role,
+		Permission\DefaultPermission as Permission
+	};
 
-		$acl = new Acl();
+	$acl = new Acl();
 ```
 
