@@ -38,7 +38,8 @@ or
 	composer require samshal/acl
 ```
 
-### Getting Started: Creating an ACL
+### Getting Started
+#### Creating an ACL
 Creating an ACL component is as easy as instantiating `Samshal\Acl`. The constructor __currently__ accepts no arguments. An example of instantiation is:
 ```php
 <?php
@@ -54,4 +55,71 @@ Creating an ACL component is as easy as instantiating `Samshal\Acl`. The constru
 	$acl = new Acl();
 ```
 
-#### Adding objects (**Roles**, **Permission** and **Resources**) to the ACL.
+#### Adding objects (**Roles**, **Permissions** and **Resources**) to the ACL.
+The ACL provides an `add` method for adding new objects generically. In other words, to add a new role to the Acl, just pass in a `Role Object` to the ACL`s `add` method. You can also do the same for Roles and Permissions.
+
+A Role Object is an instance of the `\Samshal\Acl\Role\DefaultRole` object or more generally, an object that implements the `\Samshal\Acl\Role\RoleInterface` and `\Samshal\Acl\ObjectInterface` contracts. It accepts the name of the Role to create as parameter and the description for the created role as optional second parameter.
+
+Similarly Resource objects are instances of the `\Samshal\Acl\Resource\DefaultResource` object which also implements the `\Samshal\Acl\Resource\ResourceInterface` and `\Samshal\Acl\ObjectInterface` interfaces, Likewise for permissions, they must implement the `\Samshal\Acl\Permission\PermissionInterface` and the `\Samshal\Acl\ObjectInterface` contracts or be new instances of the `\Samshal\Acl\Permission\DefaultPermission` class.
+
+Generally, Roles, Resources and Permissions are referred to as Objects. They must all implement the `\Samshal\Acl\ObjectInterface` contract.
+
+```php
+	...
+
+	$adminRole = new Role("Admin");
+	$accountantRole = new Role("Accountant", "This is optional: anybody who`s not an admin is an accountant");
+
+	$acl->add($adminRole);
+	$acl->add($accountantRole);
+
+	$patientFinancialHistoryResource = new Resource("patientFinancialHistory");
+
+	$acl->add($patientFinancialHistoryResource);
+
+	$editPermission = new Permission("edit");
+	$viewPermission = new Permission("view");
+
+	$acl->add($editPermission, $viewPermission);
+
+	...
+```
+Internally, the created objects are stored in Registries which are fully serializable. This makes it easy to transfer/get the objects from anywhere; a persistent storage, a database and anywhere data can be stored/received. More on this later.
+
+Samshal\Acl provides a more intuitive way to create objects. Instead of creating new objects everytime you need to add them to the registry, why not call a single method that can determine which kind of object you are trying to create and have it do it automatically? The ACL provides an `addRole`, `addResource` and `addPermission` methods for this purpose which all accepts string values as parameters.
+Example:
+
+```php
+	...
+
+	$acl->addRole('Admin');
+	$acl->addRole('Accountant');
+
+	$acl->addResource('patientFinancialHistory');
+
+	$acl->addPermission('edit');
+	$acl->addPermission('view');
+
+	...
+```
+
+Cool right?
+The add methods (addRole, addResource, addPermission and add) are variadic, they can accept an unlimited number of arguments at a time. So we could even make our lives less more boring by doing this while adding the Roles
+
+```php
+	...
+
+	$acl->addRole('Admin', 'Accountant');
+
+	...
+```
+
+or this for the Permissions.
+
+```php
+	...
+
+	$acl->addPermission('edit', 'view', 'create', 'print', 'delete'); //you can add even more permissions!
+
+	...
+```
