@@ -365,6 +365,6 @@ class Acl implements AclInterface
 
         $role = $this->globalRegistry->get($role);
 
-        return $role[$resource][$permission]["status"];
+        return $role[$resource][$permission]["status"] ?? false;
     }
 }
