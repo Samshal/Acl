@@ -181,6 +181,7 @@ class Acl implements AclInterface
 			return $result;
 		}
 
+        $args = (count($args) > 0) ? $args : $this->resourceRegistry->getRegistryNames();
         foreach ($args as $arg) {
             $this->allow(
                 $this->session["role"],

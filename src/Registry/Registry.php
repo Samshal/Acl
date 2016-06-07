@@ -74,4 +74,28 @@ class Registry implements RegistryInterface
     {
         return ($this->exists($object)) ? $this->registry[$object] : null;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRegistry() : array
+    {
+        return $this->registry;
+    }
+
+    /**
+     * returns the names of objects stored in the registry
+     *
+     * @return array
+     */
+    public function getRegistryNames() : array
+    {
+        $names = [];
+        foreach ($this->getRegistry() as $registryName=>$registryValue)
+        {
+            $names[] = $registryName;
+        }
+
+        return $names;
+    }
 }

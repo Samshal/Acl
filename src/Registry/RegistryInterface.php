@@ -49,4 +49,11 @@ interface RegistryInterface
      * @return mixed
      */
     public function get(string $object);
+
+    /**
+     * returns the registry global property
+     *
+     *  @return array
+     */
+    public function getRegistry();
 }
