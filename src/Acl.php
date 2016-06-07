@@ -168,20 +168,29 @@ class Acl implements AclInterface
             }
         }
 
+        $args = (count($args) > 0) ? $args : $this->resourceRegistry->getRegistryNames();
+
 		if ($this->session["query"])
 		{
-			$result = $this->getPermissionStatus(
-                $this->session["role"],
-                $permission,
-                $args[0]
-            );
+			foreach ($args as $arg)
+            {
+                $result = $this->getPermissionStatus(
+                    $this->session["role"],
+                    $permission,
+                    $arg
+                );
 
-			$this->initSession();
+                if (!$result)
+                {
+                    break;
+                }
+            }
+            
+            $this->initSession();
 
-			return $result;
+            return $result;
 		}
 
-        $args = (count($args) > 0) ? $args : $this->resourceRegistry->getRegistryNames();
         foreach ($args as $arg) {
             $this->allow(
                 $this->session["role"],
