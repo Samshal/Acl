@@ -25,7 +25,7 @@ interface AclInterface
      * @param string $role
      * @return void
      */
-    public function addRole(string $role);
+    public function addRole(string ...$role);
 
     /**
      * Adds a new resource object to the registry
@@ -33,7 +33,7 @@ interface AclInterface
      * @param string $resource
      * @return void
      */
-    public function addResource(string $resource);
+    public function addResource(string ...$resource);
 
     /**
      * Adds a new permission object to the registry
@@ -41,7 +41,7 @@ interface AclInterface
      * @param string $permission
      * @return void
      */
-    public function addPermission(string $permission);
+    public function addPermission(string ...$permission);
 
     /**
      * Adds objects lazily.
@@ -53,7 +53,7 @@ interface AclInterface
      * @throws \Exception
      * @return void
      */
-    public function add(ObjectInterface $object);
+    public function add(ObjectInterface ...$object);
 
     /**
      * Change the status option of an assigned permission to true
@@ -65,7 +65,7 @@ interface AclInterface
      * @throws \Exception
      * @return void
      */
-    public function allow(string $role, string $permission, string $resource, bool $status=true);
+    public function allow(string $role, string $permission, string $resource, bool $status=null);
 
     /**
      * Change the status option of an assigned permission to false

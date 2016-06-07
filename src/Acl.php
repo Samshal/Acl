@@ -213,17 +213,17 @@ class Acl implements AclInterface
 	{
 		foreach ($resource as $_resource)
 		{
-			$this->resourceRegistry->save($resource);
+			$this->resourceRegistry->save($_resource);
 		}
 	}
 
 	/**
 	 * Add a new permission object to the registry
 	 *
-	 * @param string $permission
+	 * @param string[] $permission
 	 * @return void
 	 */
-	public function addPermission(string $permission)
+	public function addPermission(string ...$permission)
 	{
 		foreach ($permission as $_permission)
 		{
@@ -279,8 +279,9 @@ class Acl implements AclInterface
 	 * @throws \Exception
 	 * @return void
 	 */
-	public function allow(string $role, string $permission, string $resource, boolean $status=true)
+	public function allow(string $role, string $permission, string $resource, bool $status=null)
 	{
+        $status = $status ?? true;
 		if (!$this->roleRegistry->exists($role)) {
             throw new \Exception(
                 sprintf(

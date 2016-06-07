@@ -8,7 +8,7 @@
  */
 namespace Samshal\Acl\Permission;
 
-use Samsha\Acl\ObjectInterface;
+use Samshal\Acl\ObjectInterface;
 
 /**
  * class DefaultPermission.
