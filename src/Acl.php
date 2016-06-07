@@ -157,13 +157,15 @@ class Acl implements AclInterface
             );
         }
 
-        if (!$this->resourceRegistry->exists($args[0])) {
-            throw new \Exception(
-                sprintf(
-                    "The resource: %s doesnt exist",
-                    (string)$args[0]
-                )
-            );
+        foreach ($args as $arg) {
+            if (!$this->resourceRegistry->exists($arg)) {
+                throw new \Exception(
+                    sprintf(
+                        "The resource: %s doesnt exist",
+                        (string)$arg
+                    )
+                );
+            }
         }
 
 		if ($this->session["query"])
@@ -179,12 +181,14 @@ class Acl implements AclInterface
 			return $result;
 		}
 
-		$this->allow(
-            $this->session["role"],
-            $permission,
-            $args[0],
-            (boolean)$this->session["status"]
-        );
+        foreach ($args as $arg) {
+            $this->allow(
+                $this->session["role"],
+                $permission,
+                $arg,
+                (boolean)$this->session["status"]
+            );
+        }
 
 		$this->initSession();
 	}
