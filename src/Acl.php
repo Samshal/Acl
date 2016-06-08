@@ -148,7 +148,7 @@ class Acl implements AclInterface
 	 */
 	public function __call(string $permission, array $args)
 	{
-		if (!$this->permissionRegistry->exists($permission)) {
+        if (!$this->permissionRegistry->exists($permission)) {
             throw new \Exception(
                 sprintf(
                     "The permission: %s doesnt exist",
@@ -172,7 +172,7 @@ class Acl implements AclInterface
 
 		if ($this->session["query"])
 		{
-			foreach ($args as $arg)
+            foreach ($args as $arg)
             {
                 $result = $this->getPermissionStatus(
                     $this->session["role"],
@@ -283,6 +283,30 @@ class Acl implements AclInterface
 		}
 	}
 
+    /**
+     * Allows roles to inherit from the registries of other roles
+     *
+     * @param string[] $roles
+     */
+    public function inherits(string ...$roles)
+    {
+        foreach ($roles as $role)
+        {
+            if (!$this->roleRegistry->exists($role)) {
+                throw new \Exception(
+                    sprintf(
+                        "The role: %s doesnt exist",
+                        (string)$role
+                    )
+                );
+            }
+
+            $this->roleRegistry->setRegistryValue($this->session["role"], $role);
+        }
+
+        $this->initSession();
+    }
+
 	/**
 	 * Change the status option of an assigned permission to true
 	 *
@@ -376,9 +400,25 @@ class Acl implements AclInterface
             );
         }
 
+        $roleObject = $this->globalRegistry->get($role);
 
-        $role = $this->globalRegistry->get($role);
+        if (isset($roleObject[$resource][$permission]["status"]))
+        {
+            return $roleObject[$resource][$permission]["status"];
+        }
 
-        return $role[$resource][$permission]["status"] ?? false;
+        $parents = $this->roleRegistry->getRegistry()[$role];
+
+        foreach ($parents as $parentRole)
+        {
+            $permissionStatus = $this->getPermissionStatus($parentRole, $permission, $resource);
+
+            if ($permissionStatus)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

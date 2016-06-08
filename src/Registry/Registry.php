@@ -98,4 +98,16 @@ class Registry implements RegistryInterface
 
         return $names;
     }
+
+    /**
+     * Sets the value of a registry object
+     *
+     * @param string $registryIndex
+     * @param string $registryValue
+     * @return void
+     */
+    public function setRegistryValue(string $registryIndex, string $registryValue)
+    {
+        $this->registry[$registryIndex][] = $registryValue;
+    }
 }

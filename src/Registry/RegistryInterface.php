@@ -56,4 +56,13 @@ interface RegistryInterface
      *  @return array
      */
     public function getRegistry();
+
+    /**
+     * Sets the value of a registry object
+     *
+     * @param string $registryIndex
+     * @param string $registryValue
+     * @return void
+     */
+    public function setRegistryValue(string $registryIndex, string $registryValue);
 }
