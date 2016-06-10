@@ -219,7 +219,7 @@ You can also call a Permission object without any parameter. This grants the per
 This library is currently developed and maintained by [Samuel Adeshina](http://samshal.github.io)
 
 ## ROAD MAP
-The next release will include most of the features and fixes detailed in this [issue](https://github.com/Samshal/Acl/issues) especially [this](https://github.com/Samshal/Acl/issues/3)
+Road Map draft in progress.
 
 ## HOW TO CONTRIBUTE
 Support follows PSR-2 PHP coding standards.
