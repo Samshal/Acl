@@ -11,6 +11,7 @@ This component is an implementation of an ACL, it makes it easy for you to get u
 ### Class Features
 - Creation of Resources, Roles and Permissions
 - Ability to set Permissions on Resources and granting these Permissions to Roles.
+- Support for Role Inheritance.
 - Fully Serializable, can work interoperably with any source of data.
 - Compatible with PHP v7.0+
 - Easy to use
@@ -206,6 +207,13 @@ To check the permission a role has on a certain resource, you can use a snippet 
 
 	...
 ```
+
+#### Other Interesting Features
+###### Role - Role Inheritance
+`\Samshal\acl` allows roles to inherit permissions from other roles. The Acl component has an `inherits` method that accepts a Role object as parameter. You can also pass in a string, but it must be the id of an already existent role object.
+
+###### Automatically grant permissions on all resources.
+You can also call a Permission object without any parameter. This grants the permission in question on all resources defined within the ACL on the Role in question.
 
 ## Maintainer of this Library
 This library is currently developed and maintained by [Samuel Adeshina](http://samshal.github.io)
