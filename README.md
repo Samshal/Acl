@@ -213,7 +213,7 @@ To check the permission a role has on a certain resource, you can use a snippet 
 `\Samshal\acl` allows roles to inherit permissions from other roles. The Acl component has an `inherits` method that accepts a Role object as parameter. You can also pass in a string, but it must be the id of an already existent role object.
 
 ###### Automatically grant permissions on all resources.
-You can also call a Permission object without any parameter. This grants the permission in question on all resources defined within the ACL on the Role in question.
+You can also call a Permission object without any parameter. This grants the permission in question on all resources defined within the ACL on the Role in session.
 
 ## Maintainer of this Library
 This library is currently developed and maintained by [Samuel Adeshina](http://samshal.github.io)
