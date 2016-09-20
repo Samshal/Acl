@@ -421,4 +421,8 @@ class Acl implements AclInterface
 
         return false;
     }
+
+    public function getResources(){
+        $this->resourceRegistry->getRegistryNames();
+    }
 }
