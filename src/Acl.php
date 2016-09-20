@@ -423,6 +423,6 @@ class Acl implements AclInterface
     }
 
     public function getResources(){
-        $this->resourceRegistry->getRegistryNames();
+        return $this->resourceRegistry->getRegistryNames();
     }
 }
