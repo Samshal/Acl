@@ -32,7 +32,7 @@ interface RegistryInterface
      * @param string $object
      * @return void
      */
-    public function remove(string $object) : bool;
+    public function remove(string $object);
 
     /**
      * determines if an object exists in the global registry
