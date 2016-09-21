@@ -44,7 +44,7 @@ class Registry implements RegistryInterface
      * @param string $object
      * @return void
      */
-    public function remove(string $object) : bool
+    public function remove(string $object)
     {
         if ($this->exists($object)) {
             unset($this->registry[$object]);

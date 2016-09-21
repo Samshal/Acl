@@ -133,21 +133,21 @@ class Acl implements AclInterface
             );
         }
 
-		$this->session["role"] = $role;
+        $this->session["role"] = $role;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Listen for and intercept undefined methods
-	 *
-	 * @param string $permission
-	 * @param string[] $args
-	 * @throws \Exception
-	 * @return boolean|null
-	 */
-	public function __call(string $permission, array $args)
-	{
+    /**
+     * Listen for and intercept undefined methods
+     *
+     * @param string $permission
+     * @param string[] $args
+     * @throws \Exception
+     * @return boolean|null
+     */
+    public function __call(string $permission, array $args)
+    {
         if (!$this->permissionRegistry->exists($permission)) {
             throw new \Exception(
                 sprintf(
@@ -170,8 +170,8 @@ class Acl implements AclInterface
 
         $args = (count($args) > 0) ? $args : $this->resourceRegistry->getRegistryNames();
 
-		if ($this->session["query"])
-		{
+        if ($this->session["query"])
+        {
             foreach ($args as $arg)
             {
                 $result = $this->getPermissionStatus(
@@ -189,7 +189,7 @@ class Acl implements AclInterface
             $this->initSession();
 
             return $result;
-		}
+        }
 
         foreach ($args as $arg) {
             $this->allow(
@@ -200,88 +200,88 @@ class Acl implements AclInterface
             );
         }
 
-		$this->initSession();
-	}
+        $this->initSession();
+    }
 
-	/**
-	 * Add a new role object to the registry
-	 *
-	 * @param string[] $role
-	 * @return void
-	 */
-	public function addRole(string ...$role)
-	{
-		foreach ($role as $_role)
-		{
-			$this->roleRegistry->save($_role);
-		}
-	}
+    /**
+     * Add a new role object to the registry
+     *
+     * @param string[] $role
+     * @return void
+     */
+    public function addRole(string ...$role)
+    {
+        foreach ($role as $_role)
+        {
+            $this->roleRegistry->save($_role);
+        }
+    }
 
-	/**
-	 * Add a new resource object to the registry
-	 *
-	 * @param string[] $resource
-	 * @return void
-	 */
-	public function addResource(string ...$resource)
-	{
-		foreach ($resource as $_resource)
-		{
-			$this->resourceRegistry->save($_resource);
-		}
-	}
+    /**
+     * Add a new resource object to the registry
+     *
+     * @param string[] $resource
+     * @return void
+     */
+    public function addResource(string ...$resource)
+    {
+        foreach ($resource as $_resource)
+        {
+            $this->resourceRegistry->save($_resource);
+        }
+    }
 
-	/**
-	 * Add a new permission object to the registry
-	 *
-	 * @param string[] $permission
-	 * @return void
-	 */
-	public function addPermission(string ...$permission)
-	{
-		foreach ($permission as $_permission)
-		{
-			$this->permissionRegistry->save($_permission);
-		}
-	}
+    /**
+     * Add a new permission object to the registry
+     *
+     * @param string[] $permission
+     * @return void
+     */
+    public function addPermission(string ...$permission)
+    {
+        foreach ($permission as $_permission)
+        {
+            $this->permissionRegistry->save($_permission);
+        }
+    }
 
-	/**
-	 * Adds objects lazily.
-	 *
-	 * Automatically determine the type of an object and call the appropriate
-	 * add method on it.
-	 *
-	 * @param ObjectInterface[] $objects
-	 * @throws \Exception
-	 * @return void
-	 */
-	public function add(ObjectInterface ...$objects)
-	{
-		foreach ($objects as $object)
-		{
-			if ($object instanceof RoleInterface)
-			{
-				$this->addRole((string)$object);
-			}
-			else if ($object instanceof ResourceInterface)
-			{
-				$this->addResource((string)$object);
-			}
-			else if ($object instanceof PermissionInterface)
-			{
-				$this->addPermission((string)$object);
-			}
-			else {
-	            throw new \Exception(
-	                sprintf(
-	                    "%s must implement one of RoleInterface, '.
-	                    'ResourceInterface and PermissionInterface",
-	                    $object
-	                )
-	            );
-	        }	
-		}
-	}
+    /**
+     * Adds objects lazily.
+     *
+     * Automatically determine the type of an object and call the appropriate
+     * add method on it.
+     *
+     * @param ObjectInterface[] $objects
+     * @throws \Exception
+     * @return void
+     */
+    public function add(ObjectInterface ...$objects)
+    {
+        foreach ($objects as $object)
+        {
+            if ($object instanceof RoleInterface)
+            {
+                $this->addRole((string)$object);
+            }
+            else if ($object instanceof ResourceInterface)
+            {
+                $this->addResource((string)$object);
+            }
+            else if ($object instanceof PermissionInterface)
+            {
+                $this->addPermission((string)$object);
+            }
+            else {
+                throw new \Exception(
+                    sprintf(
+                        "%s must implement one of RoleInterface, '.
+                        'ResourceInterface and PermissionInterface",
+                        $object
+                    )
+                );
+            }   
+        }
+    }
 
     /**
      * Allows roles to inherit from the registries of other roles
@@ -307,20 +307,20 @@ class Acl implements AclInterface
         $this->initSession();
     }
 
-	/**
-	 * Change the status option of an assigned permission to true
-	 *
-	 * @param string $role;
-	 * @param string $permission
-	 * @param string $resource
-	 * @param boolean $status Optional
-	 * @throws \Exception
-	 * @return void
-	 */
-	public function allow(string $role, string $permission, string $resource, bool $status=null)
-	{
+    /**
+     * Change the status option of an assigned permission to true
+     *
+     * @param string $role;
+     * @param string $permission
+     * @param string $resource
+     * @param boolean $status Optional
+     * @throws \Exception
+     * @return void
+     */
+    public function allow(string $role, string $permission, string $resource, bool $status=null)
+    {
         $status = $status ?? true;
-		if (!$this->roleRegistry->exists($role)) {
+        if (!$this->roleRegistry->exists($role)) {
             throw new \Exception(
                 sprintf(
                     "The role: %s doesnt exist",
@@ -422,7 +422,8 @@ class Acl implements AclInterface
         return false;
     }
 
-    public function getResources(){
+    public function getResources()
+    {
         return $this->resourceRegistry->getRegistryNames();
     }
 }
