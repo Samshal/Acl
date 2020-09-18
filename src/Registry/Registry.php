@@ -27,30 +27,34 @@ class Registry implements RegistryInterface
      *
      * @param string $object
      * @param variadic $options
-     * @return void
+     * @return bool
      */
     public function save(string $object, ...$options)
     {
         if (!$this->exists($object)) {
             $this->registry[$object] = [];
+
+            return true;
         }
 
-        return;
+        return false;
     }
 
     /**
      * removes an object from the registry
      *
      * @param string $object
-     * @return void
+     * @return bool
      */
     public function remove(string $object)
     {
         if ($this->exists($object)) {
             unset($this->registry[$object]);
+
+            return true;
         }
 
-        return;
+        return false;
     }
 
     /**
