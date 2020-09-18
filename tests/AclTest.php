@@ -16,13 +16,13 @@ use Samshal\Acl\Permission\DefaultPermission as Permission;
  */
 class AclTest extends \PHPUnit\Framework\TestCase
 {
-   public function testAddObjects()
-   {
-        $acl = new Acl();
-        $acl->add(
-            new Role('role1');
-            new Resource('rsx1');
-            new Permission('permm1');
-        );
-   }
+   // public function testAddObjects()
+   // {
+   //      $acl = new Acl();
+   //      $acl->add(
+   //          new Role('role1'),
+   //          new Resource('rsx1'),
+   //          new Permission('permm1'),
+   //      );
+   // }
 }
