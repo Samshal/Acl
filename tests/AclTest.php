@@ -14,7 +14,7 @@ use Samshal\Acl\Permission\DefaultPermission as Permission;
 /**
  * class AclTest.
  */
-class AclTest extends \PHPUnit_Framework_TestCase
+class AclTest extends \PHPUnit\Framework\TestCase
 {
    public function testAddObjects()
    {
