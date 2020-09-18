@@ -9,16 +9,12 @@
             "email": "samueladeshina73@gmail.com"
         }
     ],
-    "config":{
-        "platform":{
-            "php":"^7.2.0"
-        }
+    "require": {
+        "php": "^7.0"
     },
     "autoload":{
         "psr-4":{
             "Samshal\\Acl\\":"./src"
         }
-    },
-    "minimum-stability": "dev",
-    "require": {}
+    }
 }
