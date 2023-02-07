@@ -3,7 +3,6 @@
     "description": "This package provides a lightweight and flexible access control list for privileges and permission management.",
     "type": "library",
     "license": "MIT",
-    "version": "2.0",
     "authors": [
         {
             "name": "Samshal",
