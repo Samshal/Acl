@@ -1,1 +1,0 @@
-{"version":1,"defects":[],"times":{"Samshal\\Acl\\Test\\Role\\RoleTest::testNewRoleReturnStringName":0,"Samshal\\Acl\\Test\\Role\\RoleTest::testNewRoleReturnNameWhenCastedAsString":0,"Samshal\\Acl\\Test\\Resource\\ResourceTest::testNewResourceReturnStringName":0.004,"Samshal\\Acl\\Test\\Resource\\ResourceTest::testNewResourceReturnNameWhenCastedAsString":0}}
