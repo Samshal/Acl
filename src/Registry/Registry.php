@@ -21,30 +21,24 @@ class Registry implements RegistryInterface
 
     /**
      * Saves an object to the registry
+     * @param string $object
+     * @param mixed ...$options
      */
-    public function save(string $object, ...$options): bool
+    public function save(string $object, ...$options): void
     {
         if (!$this->exists($object)) {
             $this->registry[$object] = [];
-
-            return true;
         }
-
-        return false;
     }
 
     /**
      * removes an object from the registry
      */
-    public function remove(string $object): bool
+    public function remove(string $object): void
     {
         if ($this->exists($object)) {
             unset($this->registry[$object]);
-
-            return true;
         }
-
-        return false;
     }
 
     /**
@@ -52,7 +46,7 @@ class Registry implements RegistryInterface
      */
     public function exists(string $object) : bool
     {
-        return (!empty($this->registry) && isset($this->registry[$object]));
+        return !empty($this->registry) && isset($this->registry[$object]);
     }
 
     /**
@@ -60,7 +54,7 @@ class Registry implements RegistryInterface
      */
     public function get(string $object): mixed
     {
-        return ($this->exists($object)) ? $this->registry[$object] : null;
+        return $this->exists($object) ? $this->registry[$object] : null;
     }
 
     /**
