@@ -54,9 +54,9 @@ class Acl implements AclInterface
      */
     protected array $session = [];
 
-    const SYN_ALLOW = "can";
+    protected const SYN_ALLOW = "can";
 
-    const SYN_DENY = "cannot";
+    protected const SYN_DENY = "cannot";
 
     /**
      * Performs bootstrapping
@@ -96,7 +96,7 @@ class Acl implements AclInterface
     {
         if ($role === self::SYN_ALLOW || $role === self::SYN_DENY)
         {
-            $this->session["status"] = ($role === self::SYN_ALLOW);
+            $this->session["status"] = $role === self::SYN_ALLOW;
 
             if (!empty($this->session["role"]))
             {
@@ -107,12 +107,7 @@ class Acl implements AclInterface
         }
 
         if (!$this->roleRegistry->exists($role)) {
-            throw new Exception(
-                sprintf(
-                    "The role: %s doesnt exist",
-                    $role
-                )
-            );
+            throw new Exception("The role: $role doesnt exist");
         }
 
         $this->session["role"] = $role;
@@ -126,31 +121,21 @@ class Acl implements AclInterface
      * @param string $permission
      * @param string[] $args
      * @throws Exception
-     * @return boolean|null|void
+     * @return bool|null|void
      */
     public function __call(string $permission, array $args)
     {
         if (!$this->permissionRegistry->exists($permission)) {
-            throw new Exception(
-                sprintf(
-                    "The permission: %s doesnt exist",
-                    $permission
-                )
-            );
+            throw new Exception("The permission: $permission doesnt exist");
         }
 
         foreach ($args as $arg) {
             if (!$this->resourceRegistry->exists($arg)) {
-                throw new Exception(
-                    sprintf(
-                        "The resource: %s doesnt exist",
-                        $arg
-                    )
-                );
+                throw new Exception("The resource: $arg doesnt exist");
             }
         }
 
-        $args = (count($args) > 0) ? $args : $this->resourceRegistry->getRegistryNames();
+        $args = count($args) > 0 ? $args : $this->resourceRegistry->getRegistryNames();
 
         if ($this->session["query"])
         {
@@ -238,22 +223,17 @@ class Acl implements AclInterface
             {
                 $this->addRole((string)$object);
             }
-            else if ($object instanceof ResourceInterface)
+            elseif ($object instanceof ResourceInterface)
             {
                 $this->addResource((string)$object);
             }
-            else if ($object instanceof PermissionInterface)
+            elseif ($object instanceof PermissionInterface)
             {
                 $this->addPermission((string)$object);
             }
             else {
-                throw new Exception(
-                    sprintf(
-                        "%s must implement one of RoleInterface, '.
-                        'ResourceInterface and PermissionInterface",
-                        $object
-                    )
-                );
+                throw new Exception("$object must implement one of RoleInterface, " .
+                    "ResourceInterface and PermissionInterface");
             }   
         }
     }
@@ -267,12 +247,7 @@ class Acl implements AclInterface
         foreach ($roles as $role)
         {
             if (!$this->roleRegistry->exists($role)) {
-                throw new Exception(
-                    sprintf(
-                        "The role: %s doesnt exist",
-                        $role
-                    )
-                );
+                throw new Exception("The role: $role doesnt exist");
             }
 
             $this->roleRegistry->setRegistryValue($this->session["role"], $role);
@@ -290,30 +265,15 @@ class Acl implements AclInterface
     {
         $status = $status ?? true;
         if (!$this->roleRegistry->exists($role)) {
-            throw new Exception(
-                sprintf(
-                    "The role: %s doesnt exist",
-                    $role
-                )
-            );
+            throw new Exception("The role: $role doesn't exist");
         }
 
         if (!$this->permissionRegistry->exists($permission)) {
-            throw new Exception(
-                sprintf(
-                    "The permission: %s doesnt exist",
-                    $permission
-                )
-            );
+            throw new Exception("The permission: $permission doesn't exist");
         }
 
         if (!$this->resourceRegistry->exists($resource)) {
-            throw new Exception(
-                sprintf(
-                    "The resource: %s doesnt exist",
-                    $resource
-                )
-            );
+            throw new Exception("The resource: $resource doesn't exist");
         }
 
         $this->globalRegistry->save($role, $resource, $permission, $status);
@@ -335,30 +295,15 @@ class Acl implements AclInterface
     public function getPermissionStatus(string $role, string $permission, string $resource) : bool
     {
         if (!$this->roleRegistry->exists($role)) {
-            throw new Exception(
-                sprintf(
-                    "The role: %s doesnt exist",
-                    $role
-                )
-            );
+            throw new Exception("The role: $role doesn't exist");
         }
 
         if (!$this->permissionRegistry->exists($permission)) {
-            throw new Exception(
-                sprintf(
-                    "The permission: %s doesnt exist",
-                    $permission
-                )
-            );
+            throw new Exception("The permission: $permission doesn't exist");
         }
 
         if (!$this->resourceRegistry->exists($resource)) {
-            throw new Exception(
-                sprintf(
-                    "The resource: %s doesnt exist",
-                    $resource
-                )
-            );
+            throw new Exception("The resource: $resource doesn't exist");
         }
 
         $roleObject = $this->globalRegistry->get($role);
